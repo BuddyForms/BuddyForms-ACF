@@ -131,6 +131,28 @@ class BuddyFormsACF {
      * @since 0.1
      */
     function buddyforms_acf_front_js_css_enqueue() {
+        wp_enqueue_style( 'wp-color-picker' );
+        wp_enqueue_script(
+            'iris',
+            admin_url( 'js/iris.min.js' ),
+            array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ),
+            false,
+            1
+        );
+        wp_enqueue_script(
+            'wp-color-picker',
+            admin_url( 'js/color-picker.min.js' ),
+            array( 'iris' ),
+            false,
+            1
+        );
+        $colorpicker_l10n = array(
+            'clear' => __( 'Clear' ),
+            'defaultString' => __( 'Default' ),
+            'pick' => __( 'Select Color' )
+        );
+        wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
+
         acf_form_head();
     }
 }
