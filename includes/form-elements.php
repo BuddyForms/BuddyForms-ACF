@@ -108,7 +108,7 @@ function bf_acf_field_create_new_form_builder_form_element($form_fields, $form_s
             $acf_group = 'false';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['acf_group']))
                 $acf_group = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['acf_group'];
-            $form_fields['left']['acf_group']            = new Element_Select('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][acf_group]", $acf_groups, array('value' => $acf_group));
+            $form_fields['left']['acf_group']            = new Element_Select('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][acf_group]", $acf_groups, array('value' => $acf_group, 'class' => 'bf_acf_field_group_select'));
 
 
             // load fields
@@ -126,7 +126,7 @@ function bf_acf_field_create_new_form_builder_form_element($form_fields, $form_s
             $acf_field = 'false';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['acf_field']))
                 $acf_field = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['acf_field'];
-            $form_fields['left']['acf_field']            = new Element_Select('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][acf_field]", $field_select, array('value' => $acf_field));
+            $form_fields['left']['acf_field']            = new Element_Select('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][acf_field]", $field_select, array('value' => $acf_field, 'class' => 'bf_acf_fields_select'));
 
 
             $form_fields['right']['slug']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][slug]", 'acf_field_key');
@@ -320,3 +320,23 @@ function buddyforms_acf_update_post_meta($customfield, $post_id){
     }
 }
 add_action('buddyforms_update_post_meta','buddyforms_acf_update_post_meta', 10, 2);
+
+function buddyforms_acf_get_fields(){
+
+    // load fields
+    if($_POST['fields_group_id'])
+        $fields = apply_filters('acf/field_group/get_fields', array(),  $_POST['fields_group_id']);
+
+    $field_select = Array();
+
+    foreach( $fields as $field ){
+
+        if($field['name'])
+            $field_select[$field['key']] = $field['label'];
+    }
+
+    echo json_encode($field_select);
+
+    die();
+}
+add_action('wp_ajax_buddyforms_acf_get_fields', 'buddyforms_acf_get_fields');
