@@ -113,7 +113,7 @@ function bf_acf_create_frontend_form_element($form, $form_args){
 
     extract($form_args);
 
-    print_r($form_args);
+   // print_r($form_args);
 
     $post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
 
@@ -126,21 +126,62 @@ function bf_acf_create_frontend_form_element($form, $form_args){
     switch ($customfield['type']) {
         case 'ACF':
 
+            $post_id = $post_id == 0 ? 'new_post': $post_id;
             $new_post = array(
-                'post_id'            => $post_id == 0 ? 'new': $post_id, // Create a new post
+                'post_id'        => $post_id, // Create a new post
                 // PUT IN YOUR OWN FIELD GROUP ID(s)
                 'field_groups'       => array($customfield['acf_group'][0]), // Create post field group ID(s)
                 'form'               => false,
             );
 
-            ob_start();
-                acf_form( $new_post );
-            $acf_form = ob_get_clean();
+
+            // load fields
+            $fields = apply_filters('acf/field_group/get_fields', array(),  $customfield['acf_group'][0]);
+//          do_action('acf/create_fields', $fields, $new_post['post_id']);
+            $form->addElement(new Element_HTML('<div id="poststuff">'));
+            $form->addElement(new Element_HTML( '<input type="hidden" name="acf_nonce" value="' . wp_create_nonce( 'input' ) . '" />'));
 
 
+            foreach( $fields as $field ){
 
-            $form->addElement(new Element_HTML($acf_form));
+                // set value
+                if( !isset($field['value']) )
+                {
+                    $field['value'] = apply_filters('acf/load_value', false, $post_id, $field);
+                    $field['value'] = apply_filters('acf/format_value', $field['value'], $post_id, $field);
+                }
 
+                $field['name'] = 'fields[' . $field['key'] . ']';
+                ob_start();
+                    do_action('acf/create_field', $field, $post_id);
+                $acf_form_field = ob_get_clean();
+
+
+//                echo '<pre>';
+//                print_r($field);
+//                echo '</pre>';
+                // Create the BuddyForms Form Element Structure
+                $form->addElement(new Element_HTML( '
+                        <div id="acf-' . $field['name'] . '" class="bf_field_group field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '">
+                            <label for="'.$field['name'].'">'));
+
+                if($field['required']){
+                    $form->addElement(new Element_HTML( '<span class="required" aria-required="true">* </span>' ));
+                    $acf_form_field = str_replace('type=', 'required type=', $acf_form_field);
+                }
+                $acf_form_field = str_replace('acf-input-wrap', '', $acf_form_field);
+
+
+                $form->addElement(new Element_HTML( $field['label'].'</label>'));
+
+                if($field['instructions'])
+                    $form->addElement(new Element_HTML( '<smal>' . $field['instructions'] . '</smal>'));
+
+                $form->addElement(new Element_HTML( '<div class="bf_inputs"> '.$acf_form_field.'</div> '));
+                $form->addElement(new Element_HTML( '</div>' ));
+            }
+            $form->addElement(new Element_HTML('<div>'));
+            //acf_form($new_post);
             break;
     }
 

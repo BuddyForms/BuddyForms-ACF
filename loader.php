@@ -47,7 +47,7 @@ class BuddyFormsACF {
         add_action( 'init'					, array($this, 'includes')						, 4, 1);
         add_action( 'plugins_loaded'		, array($this, 'load_plugin_textdomain'));
 //        add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_acf_admin_style')		, 1, 1);
-        add_action( 'buddyforms_front_js_css_enqueue'	, array($this, 'buddyforms_acf_front_js_css')			, 2, 1);
+        add_action( 'buddyforms_front_js_css_enqueue'	, array($this, 'buddyforms_acf_front_js_css_enqueue')			, 2, 1);
 
         $this->load_constants();
 
@@ -130,7 +130,8 @@ class BuddyFormsACF {
      * @package buddyforms_acf
      * @since 0.1
      */
-    function buddyforms_acf_front_js_css() {
+    function buddyforms_acf_front_js_css_enqueue() {
+        acf_form_head();
     }
 }
 
