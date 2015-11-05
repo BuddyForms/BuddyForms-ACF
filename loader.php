@@ -87,13 +87,6 @@ class BuddyFormsACF {
 
         require_once( BUDDYFORMS_ACF_INCLUDES_PATH . 'form-elements.php' );
 
-//        if (is_admin()){
-//
-//            require_once( BUDDYFORMS_ACF_INCLUDES_PATH . '/admin/form-builder/form-builder.php');
-//
-//        }
-
-
     }
 
     /**
@@ -124,7 +117,7 @@ class BuddyFormsACF {
     function buddyforms_acf_admin_js($hook_suffix) {
         if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification' || $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities') {
             wp_enqueue_script('bf-acf', plugins_url('assets/admin/js/form-builder.js', __FILE__), array('jquery') );
-        }
+            }
     }
 
     /**
@@ -156,9 +149,13 @@ class BuddyFormsACF {
         );
         wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
 
+
         acf_form_head();
     }
 }
 
-$GLOBALS['BuddyFormsACF'] = new BuddyFormsACF();
+if( class_exists('acf') ) {
+    $GLOBALS['BuddyFormsACF'] = new BuddyFormsACF();
+}
+
 
