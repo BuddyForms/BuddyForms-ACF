@@ -44,10 +44,10 @@ class BuddyFormsACF {
      */
     public function __construct() {
 
-        add_action( 'init'					, array($this, 'includes')						, 4, 1);
-        add_action( 'plugins_loaded'		, array($this, 'load_plugin_textdomain'));
-        add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_acf_admin_js')		, 2, 10);
-        add_action( 'buddyforms_front_js_css_enqueue'	, array($this, 'buddyforms_acf_front_js_css_enqueue')			, 2, 1);
+        add_action( 'init', array($this, 'includes'), 4, 1);
+        add_action( 'plugins_loaded', array($this, 'load_plugin_textdomain'));
+        add_action( 'admin_enqueue_scripts', array($this, 'buddyforms_acf_admin_js'), 2, 10);
+        add_action( 'buddyforms_front_js_css_enqueue', array($this, 'buddyforms_acf_front_js_css_enqueue'), 2, 1);
 
         $this->load_constants();
 
@@ -62,6 +62,13 @@ class BuddyFormsACF {
      * @since 0.1
      */
     public function load_constants() {
+
+      if (!defined('BUDDYFORMS_ACF_POST_TYPE'))
+          define('BUDDYFORMS_ACF_POST_TYPE', 'acf');
+
+
+      if(post_type_exists( 'acf-field-group' ))
+        define('BUDDYFORMS_ACF_POST_TYPE', 'acf-field-group');
 
         if (!defined('BUDDYFORMS_ACF_PLUGIN_URL'))
             define('BUDDYFORMS_ACF_PLUGIN_URL', plugins_url('/',__FILE__));
@@ -157,5 +164,3 @@ class BuddyFormsACF {
 if( class_exists('acf') ) {
     $GLOBALS['BuddyFormsACF'] = new BuddyFormsACF();
 }
-
-

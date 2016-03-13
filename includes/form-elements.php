@@ -34,7 +34,7 @@ function bf_acf_group_create_new_form_builder_form_element($form_fields, $form_s
             // get acf's
             $posts = get_posts(array(
                 'numberposts' 	=> -1,
-                'post_type' 	=> 'acf',
+                'post_type' 	=> BUDDYFORMS_ACF_POST_TYPE,
                 'orderby' 		=> 'menu_order title',
                 'order' 		=> 'asc',
                 'suppress_filters' => false,
@@ -86,7 +86,7 @@ function bf_acf_field_create_new_form_builder_form_element($form_fields, $form_s
             // get acf's
             $posts = get_posts(array(
                 'numberposts' 	=> -1,
-                'post_type' 	=> 'acf',
+                'post_type' 	=> BUDDYFORMS_ACF_POST_TYPE,
                 'orderby' 		=> 'menu_order title',
                 'order' 		=> 'asc',
                 'suppress_filters' => false,
@@ -124,7 +124,7 @@ function bf_acf_field_create_new_form_builder_form_element($form_fields, $form_s
             $form_fields['general']['acf_field']            = new Element_Select('', "buddyforms_options[form_fields][" . $field_id . "][acf_field]", $field_select, array('value' => $acf_field, 'class' => 'bf_acf_fields_select'));
 
             $name = 'ACF-Field';
-            
+
             if($acf_field && $acf_field  != 'false')
                 $name = $field_select[$acf_field] . ' - Group: ' . $acf_groups[$acf_group];
 
@@ -166,6 +166,7 @@ function bf_acf_fields_group_create_frontend_form_element($form, $form_args){
             // load fields
             $fields = apply_filters('acf/field_group/get_fields', array(),  $customfield['acf_group']);
 
+
             $form->addElement(new Element_HTML('<div id="poststuff">'));
 
             if(!$nonce){
@@ -190,8 +191,7 @@ function bf_acf_fields_group_create_frontend_form_element($form, $form_args){
                 $required_class = '';
                 // Create the BuddyForms Form Element Structure
                 $form->addElement(new Element_HTML( '
-                        <div id="acf-' . $field['name'] . '" class="bf_field_group field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '">
-                            <label for="'.$field['name'].'">'));
+                        <div id="acf-' . $field['name'] . '" class="bf_field_group field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '"><label for="'.$field['name'].'">'));
 
                 if($field['required']){
                     $form->addElement(new Element_HTML( '<span class="required" aria-required="true">* </span>' ));
