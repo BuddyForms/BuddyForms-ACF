@@ -2,6 +2,7 @@
 
 function buddyforms_acf_admin_settings_sidebar_metabox(){
     add_meta_box('buddyforms_acf_fields', __("Advanced Custom Fields",'buddyforms'), 'buddyforms_acf_admin_settings_sidebar_html', 'buddyforms', 'side', 'low');
+
 }
 
 /*
@@ -25,6 +26,10 @@ function bf_acf_group_create_new_form_builder_form_element($form_fields, $form_s
     global $field_position, $buddyforms;
     $buddyforms_options = $buddyforms;
 
+    $post_type = 'acf';
+    if(post_type_exists( 'acf-field-group' ))
+      $post_type = 'acf-field-group';
+
     switch ($field_type) {
 
         case 'acf':
@@ -33,10 +38,10 @@ function bf_acf_group_create_new_form_builder_form_element($form_fields, $form_s
 
             // get acf's
             $posts = get_posts(array(
-                'numberposts' 	=> -1,
-                'post_type' 	=> BUDDYFORMS_ACF_POST_TYPE,
+                'numberposts' => -1,
+                'post_type' 	=> $post_type,
                 'orderby' 		=> 'menu_order title',
-                'order' 		=> 'asc',
+                'order' 		  => 'asc',
                 'suppress_filters' => false,
             ));
 
@@ -83,10 +88,14 @@ function bf_acf_field_create_new_form_builder_form_element($form_fields, $form_s
         case 'acf-field':
             unset($form_fields);
 
+            $post_type = 'acf';
+            if(post_type_exists( 'acf-field-group' ))
+              $post_type = 'acf-field-group';
+
             // get acf's
             $posts = get_posts(array(
                 'numberposts' 	=> -1,
-                'post_type' 	=> BUDDYFORMS_ACF_POST_TYPE,
+                'post_type' 	=> $post_type,
                 'orderby' 		=> 'menu_order title',
                 'order' 		=> 'asc',
                 'suppress_filters' => false,
@@ -164,8 +173,11 @@ function bf_acf_fields_group_create_frontend_form_element($form, $form_args){
             $post_id = $post_id == 0 ? 'new_post': $post_id;
 
             // load fields
-            $fields = apply_filters('acf/field_group/get_fields', array(),  $customfield['acf_group']);
-
+            if(post_type_exists( 'acf-field-group' )){
+              $fields  = acf_get_fields($customfield['acf_group']);
+            } else {
+              $fields = apply_filters('acf/field_group/get_fields', array(),  $customfield['acf_group']);
+            }
 
             $form->addElement(new Element_HTML('<div id="poststuff">'));
 
@@ -175,23 +187,40 @@ function bf_acf_fields_group_create_frontend_form_element($form, $form_args){
             }
 
             foreach( $fields as $field ){
-
                 // set value
-                if( !isset($field['value']) )
-                {
+                if( !isset($field['value']) ) {
+                  if(post_type_exists( 'acf-field-group' )){
+                    $field['value'] = get_field($field['name'], $post_id, false);
+                  } else {
                     $field['value'] = apply_filters('acf/load_value', false, $post_id, $field);
                     $field['value'] = apply_filters('acf/format_value', $field['value'], $post_id, $field);
+                  }
                 }
 
-                $field['name'] = 'fields[' . $field['key'] . ']';
-                ob_start();
-                do_action('acf/create_field', $field, $post_id);
-                $acf_form_field = ob_get_clean();
+                // echo '<pre>';
+                // print_r($field);
+                // echo '</pre>';
 
+                //$field['name'] = 'fields[' . $field['key'] . ']';
+                $field['key'] = 'fields[' . $field['key'] . ']';
+                ob_start();
+                if(post_type_exists( 'acf-field-group' )){
+                  create_field($field, $post_id);
+                } else {
+                  do_action('acf/create_field', $field, $post_id);
+                }
+                $acf_form_field = ob_get_clean();
                 $required_class = '';
-                // Create the BuddyForms Form Element Structure
-                $form->addElement(new Element_HTML( '
-                        <div id="acf-' . $field['name'] . '" class="bf_field_group field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '"><label for="'.$field['name'].'">'));
+
+                if(post_type_exists( 'acf-field-group' )){
+                  // Create the BuddyForms Form Element Structure
+                  $form->addElement(new Element_HTML( '
+                          <div id="acf-' . $field['name'] . '" class="bf_field_group acf-field acf-field-' . $field['type'] . ' acf-field' . $field['key'] . $required_class . '" data-name="' . $field['name'] . '" data-key="' . $field['key'] . '" data-type="' . $field['type'] . '"><label for="'.$field['name'].'">'));
+                } else {
+                  // Create the BuddyForms Form Element Structure
+                  $form->addElement(new Element_HTML( '
+                          <div id="acf-' . $field['name'] . '" class="bf_field_group field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '"><label for="'.$field['name'].'">'));
+                }
 
                 if($field['required']){
                     $form->addElement(new Element_HTML( '<span class="required" aria-required="true">* </span>' ));
@@ -209,7 +238,7 @@ function bf_acf_fields_group_create_frontend_form_element($form, $form_args){
                 $form->addElement(new Element_HTML( '</div>' ));
             }
             $form->addElement(new Element_HTML('<div>'));
-            //acf_form($new_post);
+
             break;
     }
 
@@ -246,9 +275,7 @@ function bf_acf_field_create_frontend_form_element($form, $form_args){
                 $nonce = 'nonce';
             }
 
-
             $field =  get_field_object($customfield['acf_field'], $post_id);
-
 
                 $field['name'] = 'fields[' . $field['key'] . ']';
                 ob_start();
@@ -257,9 +284,7 @@ function bf_acf_field_create_frontend_form_element($form, $form_args){
 
 
                 // Create the BuddyForms Form Element Structure
-                $form->addElement(new Element_HTML( '
-                        <div id="acf-' . $field['name'] . '" class="bf_field_group field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '">
-                            <label for="'.$field['name'].'">'));
+                $form->addElement(new Element_HTML('<div id="acf-' . $field['name'] . '" class="bf_field_group field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '"><label for="'.$field['name'] . '">'));
 
                 if($field['required']){
                     $form->addElement(new Element_HTML( '<span class="required" aria-required="true">* </span>' ));
@@ -297,7 +322,16 @@ function buddyforms_acf_update_post_meta($customfield, $post_id){
         $group_ID = $customfield['acf_group'];
 
         $fields = array();
-        $fields = apply_filters('acf/field_group/get_fields', $fields, $group_ID);
+
+        // load fields
+        if(post_type_exists( 'acf-field-group' )){
+          $fields  = acf_get_fields($group_ID);
+        } else {
+          $fields = apply_filters('acf/field_group/get_fields', $fields, $group_ID);
+        }
+
+
+
 
         $fields_values = $_POST[ 'fields' ];
 

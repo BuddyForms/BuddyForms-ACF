@@ -63,13 +63,6 @@ class BuddyFormsACF {
      */
     public function load_constants() {
 
-      if (!defined('BUDDYFORMS_ACF_POST_TYPE'))
-          define('BUDDYFORMS_ACF_POST_TYPE', 'acf');
-
-
-      if(post_type_exists( 'acf-field-group' ))
-        define('BUDDYFORMS_ACF_POST_TYPE', 'acf-field-group');
-
         if (!defined('BUDDYFORMS_ACF_PLUGIN_URL'))
             define('BUDDYFORMS_ACF_PLUGIN_URL', plugins_url('/',__FILE__));
 
@@ -155,12 +148,10 @@ class BuddyFormsACF {
             'pick' => __( 'Select Color' )
         );
         wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
-
-
+        
         acf_form_head();
+
     }
 }
 
-if( class_exists('acf') ) {
-    $GLOBALS['BuddyFormsACF'] = new BuddyFormsACF();
-}
+$GLOBALS['BuddyFormsACF'] = new BuddyFormsACF();
