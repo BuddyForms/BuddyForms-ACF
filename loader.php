@@ -3,7 +3,7 @@
  Plugin Name: BuddyForms Advanced Custom Fields
  Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
  Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
- Version: 0.1
+ Version: 1.0
  Author: Sven Lehnert
  Author URI: https://profiles.wordpress.org/svenl77
  License: GPLv2 or later
@@ -34,7 +34,7 @@ class BuddyFormsACF {
     /**
      * @var string
      */
-    public $version = '0.1';
+    public $version = '1.0';
 
     /**
      * Initiate the class
@@ -115,9 +115,17 @@ class BuddyFormsACF {
      * @since 0.1
      */
     function buddyforms_acf_admin_js($hook_suffix) {
-        if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification' || $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities') {
-            wp_enqueue_script('bf-acf', plugins_url('assets/admin/js/form-builder.js', __FILE__), array('jquery') );
-            }
+      global $post;
+
+      if(
+        (isset($post) && $post->post_type == 'buddyforms' && isset($_GET['action']) && $_GET['action'] == 'edit'
+          || isset($post) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php')
+        //|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
+        || $hook_suffix == 'buddyforms_page_bf_add_ons'
+        || $hook_suffix == 'buddyforms_page_bf_settings'
+      ) {
+        wp_enqueue_script('bf-acf', plugins_url('assets/admin/js/form-builder.js', __FILE__), array('jquery') );
+      }
     }
 
     /**
@@ -148,7 +156,7 @@ class BuddyFormsACF {
             'pick' => __( 'Select Color' )
         );
         wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
-        
+
         acf_form_head();
 
     }

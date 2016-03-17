@@ -1,7 +1,5 @@
 jQuery(document).ready(function(jQuery) {
-
-    jQuery('.bf_acf_field_group_select').on('change', function() {
-
+    jQuery('body').on('change','.bf_acf_field_group_select',function(){
         jQuery.ajax({
             type: 'POST',
             url: ajaxurl,
