@@ -2,12 +2,12 @@
 Contributors: svenl77, themekraft, buddyforms
 Tags: acf, advanced custom fields, buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, moderation, revision
 Requires at least: WordPress
-Tested up to: WordPress 4.4.2
-Stable tag: 1.0
+Tested up to: WordPress 4.5
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Integrates the popular Plugin "Advanced Custom Fileds" (ACF) with BuddyForms. Use all ACF Fields in your form like native BuddyForms form elements.
+Integrates the popular Plugin "Advanced Custom Fields" (ACF) with BuddyForms. Use all ACF Fields in your form like native BuddyForms form elements.
 
 == Description ==
 
@@ -19,7 +19,7 @@ This plugins supports the Free and Pro version of ACF out of the box.
 The plugin will detect if Free or Pro version is installed, and then loads the correct ACF field groups.
 <br>
 
-<h4>ACF for the backend and BuddyForms for the front end.<h4>
+<h4>ACF for the backend and BuddyForms for the front end.</h4>
 
 ACF is the preferred choice for creating post metaboxes for the edit screen in the WordPress backend (wp-admin).
 
@@ -34,12 +34,8 @@ BuddyForms ACF works with all ACF Extensions and BuddyForms Extensions.
 Create a BuddyPress Members Component or extend your groups with ACF fields!
 <br>
 
-<h4>Use ACF for all your form fields<h4>
-With ACF enabled you build your form fields once and use everywhere.
-
-Use ACF for all form elements needed and just integrate the ACF field groups or single fields in your BuddyForms forms.
-
-You can use any ACF Field or Custom ACF Fields with BuddyForms and combine them with BuddyForms Fields and Extensions.
+<h4>Use ACF for all your form fields</h4>
+With ACF enabled you build your form fields once and use everywhere. Use ACF for all form elements needed and just integrate the ACF field groups or single fields in your BuddyForms forms. You can use any ACF Field or Custom ACF Fields with BuddyForms and combine them with BuddyForms Fields and Extensions.
 <br>
 
 <h4>Moderation for your ACF Forms</h4>
@@ -47,7 +43,7 @@ With BuddyForms Moderation you get real post submission moderation to your hands
 Let your users create and edit posts without creating the ugly 404 "WordPress is struggling" if a published post is set back to draft. ;)
 <br>
 
-<H4>Use everywhere<h4>
+<H4>Use everywhere</h4>
 With BuddyForms and ACF together you build your field sets once and use them everywhere.
 In the backend edit screen or in the front end via shortcodes or integrated with BuddyPress or any other BuddyForms supported plugin.
 
@@ -60,12 +56,6 @@ See a list of ACF Extensions:
 
 Combine the power and get the most out of your post forms in the front and backend, seamlessly.
 <br>
-
-<h4>BP WC Vendors Dependencies</h4>
-<ul>
-  <li><b>BuddyForms</b></li>
-  <li><b>Advanced Custom Fields - Free or Pro</b></li>
-</ul>
 
 <a href="http://buddyforms.com" target="_new">Get BuddyForms Here</a>
 
@@ -101,6 +91,9 @@ You need the BuddyForms plugin installed for the plugin to work.
 2. ** ACF Single Field ** - Use Single fields in Groups
 
 == Changelog ==
+
+= 1.0.1 =
+* There have been some wired css issues. Fixed now by  wp_dequeue_style colors-fresh.
 
 = 1.0 =
 * final 1.0 version

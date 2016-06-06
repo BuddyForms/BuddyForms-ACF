@@ -1,9 +1,10 @@
 <?php
+
 /*
  Plugin Name: BuddyForms Advanced Custom Fields
  Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
  Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
- Version: 1.0
+ Version: 1.0.1
  Author: Sven Lehnert
  Author URI: https://profiles.wordpress.org/svenl77
  License: GPLv2 or later
@@ -31,135 +32,145 @@
 
 class BuddyFormsACF {
 
-    /**
-     * @var string
-     */
-    public $version = '1.0';
+	/**
+	 * @var string
+	 */
+	public $version = '1.0.1';
 
-    /**
-     * Initiate the class
-     *
-     * @package buddyforms acf
-     * @since 0.1
-     */
-    public function __construct() {
+	/**
+	 * Initiate the class
+	 *
+	 * @package buddyforms acf
+	 * @since 0.1
+	 */
+	public function __construct() {
 
-        add_action( 'init', array($this, 'includes'), 4, 1);
-        add_action( 'plugins_loaded', array($this, 'load_plugin_textdomain'));
-        add_action( 'admin_enqueue_scripts', array($this, 'buddyforms_acf_admin_js'), 2, 10);
-        add_action( 'buddyforms_front_js_css_enqueue', array($this, 'buddyforms_acf_front_js_css_enqueue'), 2, 1);
+		add_action( 'init', array( $this, 'includes' ), 4, 1 );
+		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'buddyforms_acf_admin_js' ), 2, 10 );
+		add_action( 'buddyforms_front_js_css_enqueue', array( $this, 'buddyforms_acf_front_js_css_enqueue' ), 2, 1 );
 
-        $this->load_constants();
+		$this->load_constants();
 
-    }
+	}
 
-    /**
-     * Defines constants needed throughout the plugin.
-     *
-     * These constants can be overridden in bp-custom.php or wp-config.php.
-     *
-     * @package buddyforms_acf
-     * @since 0.1
-     */
-    public function load_constants() {
+	/**
+	 * Defines constants needed throughout the plugin.
+	 *
+	 * These constants can be overridden in bp-custom.php or wp-config.php.
+	 *
+	 * @package buddyforms_acf
+	 * @since 0.1
+	 */
+	public function load_constants() {
 
-        if (!defined('BUDDYFORMS_ACF_PLUGIN_URL'))
-            define('BUDDYFORMS_ACF_PLUGIN_URL', plugins_url('/',__FILE__));
+		if ( ! defined( 'BUDDYFORMS_ACF_PLUGIN_URL' ) ) {
+			define( 'BUDDYFORMS_ACF_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
+		}
 
-        if (!defined('BUDDYFORMS_ACF_INSTALL_PATH'))
-            define('BUDDYFORMS_ACF_INSTALL_PATH', dirname(__FILE__) . '/');
+		if ( ! defined( 'BUDDYFORMS_ACF_INSTALL_PATH' ) ) {
+			define( 'BUDDYFORMS_ACF_INSTALL_PATH', dirname( __FILE__ ) . '/' );
+		}
 
-        if (!defined('BUDDYFORMS_ACF_INCLUDES_PATH'))
-            define('BUDDYFORMS_ACF_INCLUDES_PATH', BUDDYFORMS_ACF_INSTALL_PATH . 'includes/');
+		if ( ! defined( 'BUDDYFORMS_ACF_INCLUDES_PATH' ) ) {
+			define( 'BUDDYFORMS_ACF_INCLUDES_PATH', BUDDYFORMS_ACF_INSTALL_PATH . 'includes/' );
+		}
 
-        if (!defined('BUDDYFORMS_ACF_TEMPLATE_PATH'))
-            define('BUDDYFORMS_ACF_TEMPLATE_PATH', BUDDYFORMS_ACF_INSTALL_PATH . 'templates/');
+		if ( ! defined( 'BUDDYFORMS_ACF_TEMPLATE_PATH' ) ) {
+			define( 'BUDDYFORMS_ACF_TEMPLATE_PATH', BUDDYFORMS_ACF_INSTALL_PATH . 'templates/' );
+		}
 
-    }
+	}
 
-    /**
-     * Include files needed by BuddyForms
-     *
-     * @package buddyforms_acf
-     * @since 0.1
-     */
-    public function includes() {
+	/**
+	 * Include files needed by BuddyForms
+	 *
+	 * @package buddyforms_acf
+	 * @since 0.1
+	 */
+	public function includes() {
 
-        require_once( BUDDYFORMS_ACF_INCLUDES_PATH . 'form-elements.php' );
+		require_once( BUDDYFORMS_ACF_INCLUDES_PATH . 'form-elements.php' );
 
-    }
+	}
 
-    /**
-     * Load the textdomain for the plugin
-     *
-     * @package buddyforms_acf
-     * @since 0.1
-     */
-    public function load_plugin_textdomain() {
-        load_plugin_textdomain('buddyforms', false, dirname(plugin_basename(__FILE__)) . '/languages/');
-    }
+	/**
+	 * Load the textdomain for the plugin
+	 *
+	 * @package buddyforms_acf
+	 * @since 0.1
+	 */
+	public function load_plugin_textdomain() {
+		load_plugin_textdomain( 'buddyforms', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
 
-    /**
-     * Enqueue the needed CSS for the admin screen
-     *
-     * @package buddyforms_acf
-     * @since 0.1
-     */
-    function buddyforms_acf_admin_style($hook_suffix) {
-    }
+	/**
+	 * Enqueue the needed CSS for the admin screen
+	 *
+	 * @package buddyforms_acf
+	 * @since 0.1
+	 */
+	function buddyforms_acf_admin_style( $hook_suffix ) {
+	}
 
-    /**
-     * Enqueue the needed JS for the admin screen
-     *
-     * @package buddyforms_acf
-     * @since 0.1
-     */
-    function buddyforms_acf_admin_js($hook_suffix) {
-      global $post;
+	/**
+	 * Enqueue the needed JS for the admin screen
+	 *
+	 * @package buddyforms_acf
+	 * @since 0.1
+	 */
+	function buddyforms_acf_admin_js( $hook_suffix ) {
+		global $post;
 
-      if(
-        (isset($post) && $post->post_type == 'buddyforms' && isset($_GET['action']) && $_GET['action'] == 'edit'
-          || isset($post) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php')
-        //|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
-        || $hook_suffix == 'buddyforms_page_bf_add_ons'
-        || $hook_suffix == 'buddyforms_page_bf_settings'
-      ) {
-        wp_enqueue_script('bf-acf', plugins_url('assets/admin/js/form-builder.js', __FILE__), array('jquery') );
-      }
-    }
+		if (
+			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
+			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
+			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
+			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
+			|| $hook_suffix == 'buddyforms_page_bf_settings'
+		) {
+			wp_enqueue_script( 'bf-acf', plugins_url( 'assets/admin/js/form-builder.js', __FILE__ ), array( 'jquery' ) );
+		}
+	}
 
-    /**
-     * Enqueue the needed JS for the frontend
-     *
-     * @package buddyforms_acf
-     * @since 0.1
-     */
-    function buddyforms_acf_front_js_css_enqueue() {
-        wp_enqueue_style( 'wp-color-picker' );
-        wp_enqueue_script(
-            'iris',
-            admin_url( 'js/iris.min.js' ),
-            array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ),
-            false,
-            1
-        );
-        wp_enqueue_script(
-            'wp-color-picker',
-            admin_url( 'js/color-picker.min.js' ),
-            array( 'iris' ),
-            false,
-            1
-        );
-        $colorpicker_l10n = array(
-            'clear' => __( 'Clear' ),
-            'defaultString' => __( 'Default' ),
-            'pick' => __( 'Select Color' )
-        );
-        wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
+	/**
+	 * Enqueue the needed JS for the frontend
+	 *
+	 * @package buddyforms_acf
+	 * @since 0.1
+	 */
+	function buddyforms_acf_front_js_css_enqueue() {
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script(
+			'iris',
+			admin_url( 'js/iris.min.js' ),
+			array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ),
+			false,
+			1
+		);
+		wp_enqueue_script(
+			'wp-color-picker',
+			admin_url( 'js/color-picker.min.js' ),
+			array( 'iris' ),
+			false,
+			1
+		);
+		$colorpicker_l10n = array(
+			'clear'         => __( 'Clear' ),
+			'defaultString' => __( 'Default' ),
+			'pick'          => __( 'Select Color' )
+		);
+		wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
 
-        acf_form_head();
+		acf_form_head();
 
-    }
+		// dequeue wp styling
+		wp_dequeue_style( array(
+			'colors-fresh'
+		) );
+
+
+	}
 }
 
 $GLOBALS['BuddyFormsACF'] = new BuddyFormsACF();
