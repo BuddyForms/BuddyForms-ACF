@@ -162,7 +162,9 @@ class BuddyFormsACF {
 		);
 		wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
 
-		acf_form_head();
+		if(function_exists('acf_form_head')){
+			acf_form_head();
+		}
 
 		// dequeue wp styling
 		wp_dequeue_style( array(

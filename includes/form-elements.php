@@ -9,13 +9,40 @@ function buddyforms_acf_admin_settings_sidebar_metabox() {
  * Create the new Form Builder Sidebar MetaBox with links to add acf field elements
  *
  */
-function buddyforms_acf_admin_settings_sidebar_html() {
-	global $post;
-	echo '<b>Add ACF Field Group</b><p><a href="#" data-fieldtype="acf" class="bf_add_element_action">ACF Group</a></p>';
-	echo '<b>Add ACF Field</b><p><a href="#" data-fieldtype="acf-field" class="bf_add_element_action">ACF Field</a></p>';
+function buddyforms_acf_admin_settings_sidebar_html($sidebar_elements) {
+
+	$sidebar_elements[] = new Element_HTML( '
+		<h5>Add ACF Field Group</h5><p><a href="#" data-fieldtype="acf" class="bf_add_element_action">ACF Group</a></p>
+		<h5>Add ACF Field</h5><p><a href="#" data-fieldtype="acf-field" class="bf_add_element_action">ACF Field</a></p>
+	 ' );
+
+	return $sidebar_elements;
+
 }
 
-add_filter( 'add_meta_boxes', 'buddyforms_acf_admin_settings_sidebar_metabox' );
+add_filter( 'buddyforms_add_form_element_to_sidebar', 'buddyforms_acf_admin_settings_sidebar_html' );
+
+function buddyforms_acf_admin_settings_( $elements_select_options ) {
+	global $post;
+
+	if ( $post->post_type != 'buddyforms' ) {
+		return;
+	}
+
+	$elements_select_options['Advanced Custom Fields'] = array(
+		'acf' => array(
+			'label'     => __( 'ACF Group', 'buddyforms' ),
+		),
+		'acf-field' => array(
+			'label'     => __( 'ACF Field', 'buddyforms' ),
+		),
+	);
+
+	return $elements_select_options;
+}
+
+add_filter( 'buddyforms_add_form_element_to_select', 'buddyforms_acf_admin_settings_', 1, 2 );
+
 
 /*
  * Create the new Form Builder Form Element for teh ACF Field Groups
@@ -225,6 +252,9 @@ function bf_acf_fields_group_create_frontend_form_element( $form, $form_args ) {
 					create_field( $field, $post_id );
 				} else {
 					do_action( 'acf/create_field', $field, $post_id );
+					// create field specific html
+					do_action( "acf/render_field", $field );
+					do_action( "acf/render_field/type={$field['type']}", $field );
 				}
 				$acf_form_field = ob_get_clean();
 				$required_class = '';
