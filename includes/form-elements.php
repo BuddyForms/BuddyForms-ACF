@@ -1,28 +1,6 @@
 <?php
 
-// Add the ACF metabox with form element links to the form builder sidebar.
-function buddyforms_acf_admin_settings_sidebar_metabox() {
-	add_meta_box( 'buddyforms_acf_fields', __( "Advanced Custom Fields", 'buddyforms' ), 'buddyforms_acf_admin_settings_sidebar_html', 'buddyforms', 'side', 'low' );
-}
-
-/*
- * Create the new Form Builder Sidebar MetaBox with links to add acf field elements
- *
- */
-function buddyforms_acf_admin_settings_sidebar_html($sidebar_elements) {
-
-	$sidebar_elements[] = new Element_HTML( '
-		<h5>Add ACF Field Group</h5><p><a href="#" data-fieldtype="acf" class="bf_add_element_action">ACF Group</a></p>
-		<h5>Add ACF Field</h5><p><a href="#" data-fieldtype="acf-field" class="bf_add_element_action">ACF Field</a></p>
-	 ' );
-
-	return $sidebar_elements;
-
-}
-
-add_filter( 'buddyforms_add_form_element_to_sidebar', 'buddyforms_acf_admin_settings_sidebar_html' );
-
-function buddyforms_acf_admin_settings_( $elements_select_options ) {
+function buddyforms_acf_elements_to_select( $elements_select_options ) {
 	global $post;
 
 	if ( $post->post_type != 'buddyforms' ) {
@@ -41,7 +19,7 @@ function buddyforms_acf_admin_settings_( $elements_select_options ) {
 	return $elements_select_options;
 }
 
-add_filter( 'buddyforms_add_form_element_to_select', 'buddyforms_acf_admin_settings_', 1, 2 );
+add_filter( 'buddyforms_add_form_element_to_select', 'buddyforms_acf_elements_to_select', 1, 2 );
 
 
 /*
