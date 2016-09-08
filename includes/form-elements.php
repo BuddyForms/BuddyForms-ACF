@@ -6,14 +6,15 @@ function buddyforms_acf_elements_to_select( $elements_select_options ) {
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
 	}
+	$elements_select_options['acf']['label'] = 'ACF';
+	$elements_select_options['acf']['fields']['acf-field'] = array(
+		'label'     => __( 'ACF Field', 'buddyforms' ),
+		'unique'    => 'unique'
+	);
 
-	$elements_select_options['Advanced Custom Fields'] = array(
-		'acf' => array(
-			'label'     => __( 'ACF Group', 'buddyforms' ),
-		),
-		'acf-field' => array(
-			'label'     => __( 'ACF Field', 'buddyforms' ),
-		),
+	$elements_select_options['acf']['fields']['acf-group'] = array(
+		'label'     => __( 'ACF Group', 'buddyforms' ),
+		'unique'    => 'unique'
 	);
 
 	return $elements_select_options;
@@ -37,7 +38,7 @@ function bf_acf_group_create_new_form_builder_form_element( $form_fields, $form_
 
 	switch ( $field_type ) {
 
-		case 'acf':
+		case 'acf-group':
 			unset( $form_fields );
 
 			// get acf's
