@@ -412,6 +412,7 @@ function buddyforms_acf_get_fields() {
 
 		if ( $field['name'] ) {
 			$field_select[ $field['key'] ] = $field['label'];
+
 		}
 	}
 
@@ -421,3 +422,5 @@ function buddyforms_acf_get_fields() {
 }
 
 add_action( 'wp_ajax_buddyforms_acf_get_fields', 'buddyforms_acf_get_fields' );
+
+
