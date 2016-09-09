@@ -195,7 +195,7 @@ function bf_acf_fields_group_create_frontend_form_element( $form, $form_args ) {
 	}
 
 	switch ( $customfield['type'] ) {
-		case 'acf':
+		case 'acf-group':
 
 			$post_id = $post_id == 0 ? 'new_post' : $post_id;
 
