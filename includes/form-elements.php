@@ -211,8 +211,6 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 			}
 			$acf_form_field = str_replace( 'acf-input-wrap', '', $acf_form_field );
 
-			$form->addElement( new Element_HTML( $field['label'] . '</label>' ) );
-
 			if ( $field['instructions'] ) {
 				$form->addElement( new Element_HTML( '<smal>' . $field['instructions'] . '</smal>' ) );
 			}
@@ -252,8 +250,6 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 					}
 				}
 
-				//$field['name'] = 'fields[' . $field['key'] . ']';
-				$field['key'] = 'fields[' . $field['key'] . ']';
 				ob_start();
 				if ( post_type_exists( 'acf-field-group' ) ) {
 					create_field( $field, $post_id );
@@ -265,6 +261,8 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				}
 				$acf_form_field = ob_get_clean();
 				$required_class = '';
+
+
 
 				if ( post_type_exists( 'acf-field-group' ) ) {
 					// Create the BuddyForms Form Element Structure
@@ -281,8 +279,6 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 					$acf_form_field = str_replace( 'type=', 'required type=', $acf_form_field );
 				}
 				$acf_form_field = str_replace( 'acf-input-wrap', '', $acf_form_field );
-
-				$form->addElement( new Element_HTML( $field['label'] . '</label>' ) );
 
 				if ( $field['instructions'] ) {
 					$form->addElement( new Element_HTML( '<smal>' . $field['instructions'] . '</smal>' ) );
