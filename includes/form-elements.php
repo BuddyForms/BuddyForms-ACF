@@ -10,6 +10,7 @@ function buddyforms_acf_elements_to_select( $elements_select_options ) {
 		return;
 	}
 	$elements_select_options['acf']['label'] = 'ACF';
+	$elements_select_options['acf']['class'] = 'bf_show_if_f_type_post';
 	$elements_select_options['acf']['fields']['acf-field'] = array(
 		'label'     => __( 'ACF Field', 'buddyforms' ),
 		'unique'    => 'unique'
