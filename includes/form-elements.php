@@ -311,21 +311,30 @@ function buddyforms_acf_update_post_meta( $customfield, $post_id ) {
 		// load fields
 		if ( post_type_exists( 'acf-field-group' ) ) {
 			$fields = acf_get_fields( $group_ID );
+
+			if ( $fields ) {
+				foreach ( $fields as $field ) {
+
+					if ( isset( $_POST['acf'][ $field['key'] ] ) ) {
+						update_field( $field['key'], $_POST['acf'][$field['key']], $post_id );
+					}
+
+				}
+			}
+
 		} else {
 			$fields = apply_filters( 'acf/field_group/get_fields', $fields, $group_ID );
-		}
+			if ( $fields ) {
+				foreach ( $fields as $field ) {
 
-//		$fields_values = $_POST['fields'];
+					if ( isset( $_POST[ $field['name'] ] ) ) {
+						update_field( $field['key'], $_POST[ $field['name'] ], $post_id );
+					}
 
-		if ( $fields ) {
-			foreach ( $fields as $field ) {
-
-				if ( isset( $_POST[ $field['name'] ] ) ) {
-					update_field( $field['key'], $_POST[ $field['name'] ], $post_id );
 				}
-
 			}
 		}
+
 	}
 
 	if ( $customfield['type'] == 'acf-field' ) {
