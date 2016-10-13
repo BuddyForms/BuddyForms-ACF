@@ -183,6 +183,9 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				$nonce = 'nonce';
 			}
 
+			if(!isset($customfield['acf_field'])){
+				return $form;
+			}
 			$field = get_field_object( $customfield['acf_field'], $post_id );
 
 			$field['name'] = 'fields[' . $field['key'] . ']';
