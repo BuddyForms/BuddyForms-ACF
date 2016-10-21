@@ -13,12 +13,10 @@ function buddyforms_acf_elements_to_select( $elements_select_options ) {
 	$elements_select_options['acf']['class'] = 'bf_show_if_f_type_post';
 	$elements_select_options['acf']['fields']['acf-field'] = array(
 		'label'     => __( 'ACF Field', 'buddyforms' ),
-		'unique'    => 'unique'
 	);
 
 	$elements_select_options['acf']['fields']['acf-group'] = array(
 		'label'     => __( 'ACF Group', 'buddyforms' ),
-		'unique'    => 'unique'
 	);
 
 	return $elements_select_options;
@@ -103,7 +101,7 @@ function buddyforms_acf_form_builder_form_elements( $form_fields, $form_slug, $f
 
 			$name = 'ACF-Field';
 			if ( $acf_field && $acf_field != 'false' ) {
-				$name = $field_select[ $acf_field ] . ' - Group: ' . $acf_groups[ $acf_group ];
+				$name = 'ACF Field: ' . $acf_field;
 			}
 			$form_fields['general']['name'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", $name );
 
@@ -138,7 +136,7 @@ function buddyforms_acf_form_builder_form_elements( $form_fields, $form_slug, $f
 
 			$name = 'ACF-Group';
 			if ( $acf_group != 'false' ) {
-				$name = ' ACF Field Group: ' . $acf_group;
+				$name = ' ACF Group: ' . $acf_group;
 			}
 			$form_fields['general']['name'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", $name );
 
@@ -241,7 +239,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 			// load fields
 			if ( post_type_exists( 'acf-field-group' ) ) {
-				$fields = acf_get_fields( $customfield['acf_group'] );
+				$fields = acf_get_fields( (int)$customfield['acf_group'] );
 			} else {
 				$fields = apply_filters( 'acf/field_group/get_fields', array(), $customfield['acf_group'] );
 			}
