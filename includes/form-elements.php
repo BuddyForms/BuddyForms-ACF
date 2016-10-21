@@ -186,7 +186,13 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 			if(!isset($customfield['acf_field'])){
 				return $form;
 			}
+
 			$field = get_field_object( $customfield['acf_field'], $post_id );
+
+			// make sure we have a field key. If user switc from free to pro ACF this can happen so we need to catch it...
+			if( !isset( $field['key'] ) ){
+				return $form;
+			}
 
 			$field['name'] = 'fields[' . $field['key'] . ']';
 			ob_start();
@@ -199,15 +205,18 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 			$acf_form_field = ob_get_clean();
 			$required_class = '';
 
+			// if the field type is not set for any reason, make it a text field. This check is again in tplace for people how switch from pro to free and have some elements with no type
+			$field_type = isset($field['type']) ? $field['type'] : 'text';
+
 			// Create the BuddyForms Form Element Structure
 			if ( post_type_exists( 'acf-field-group' ) ) {
 				// Create the BuddyForms Form Element Structure
 				$form->addElement( new Element_HTML( '
-                          <div id="acf-' . $field['name'] . '" class="bf_field_group acf-field acf-field-' . $field['type'] . ' acf-field' . $field['key'] . $required_class . '" data-name="' . $field['name'] . '" data-key="' . $field['key'] . '" data-type="' . $field['type'] . '"><label for="' . $field['name'] . '">' ) );
+                          <div id="acf-' . $field['name'] . '" class="bf_field_group acf-field acf-field-' . $field_type . ' acf-field' . $field['key'] . $required_class . '" data-name="' . $field['name'] . '" data-key="' . $field['key'] . '" data-type="' . $field_type . '"><label for="' . $field['name'] . '">' ) );
 			} else {
 				// Create the BuddyForms Form Element Structure
 				$form->addElement( new Element_HTML( '
-                          <div id="acf-' . $field['name'] . '" class="bf_field_group field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '"><label for="' . $field['name'] . '">' ) );
+                          <div id="acf-' . $field['name'] . '" class="bf_field_group field field_type-' . $field_type . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field_type . '"><label for="' . $field['name'] . '">' ) );
 			}
 
 			if ( $field['required'] ) {
@@ -235,6 +244,10 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				$fields = acf_get_fields( $customfield['acf_group'] );
 			} else {
 				$fields = apply_filters( 'acf/field_group/get_fields', array(), $customfield['acf_group'] );
+			}
+
+			if(!isset($fields) || !is_array($fields)){
+				return $form;
 			}
 
 			$form->addElement( new Element_HTML( '<div id="poststuff">' ) );
