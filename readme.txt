@@ -1,9 +1,9 @@
 === BuddyForms ACF ===
 Contributors: svenl77, themekraft, buddyforms
 Tags: acf, advanced custom fields, buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, moderation, revision
-Requires at least: WordPress
-Tested up to: WordPress 4.5
-Stable tag: 1.0.1
+Requires at least: 3.0
+Tested up to: 4.6.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
