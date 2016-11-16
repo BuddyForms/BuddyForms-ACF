@@ -22,7 +22,7 @@ function buddyforms_acf_elements_to_select( $elements_select_options ) {
 	return $elements_select_options;
 }
 
-add_filter( 'buddyforms_add_form_element_to_select', 'buddyforms_acf_elements_to_select', 1, 2 );
+add_filter( 'buddyforms_add_form_element_select_option', 'buddyforms_acf_elements_to_select', 1, 2 );
 
 
 /*

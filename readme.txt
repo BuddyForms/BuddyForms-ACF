@@ -1,5 +1,5 @@
 === BuddyForms ACF ===
-Contributors: svenl77, themekraft, buddyforms
+Contributors: svenl77, konradS, themekraft, buddyforms
 Tags: acf, advanced custom fields, buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, moderation, revision
 Requires at least: 3.0
 Tested up to: 4.6.1
