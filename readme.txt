@@ -1,9 +1,9 @@
 === BuddyForms ACF ===
 Contributors: svenl77, konradS, themekraft, buddyforms
 Tags: acf, advanced custom fields, buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, moderation, revision
-Requires at least: 3.0
+Requires at least: 3.9
 Tested up to: 4.6.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,20 @@ You need the BuddyForms plugin installed for the plugin to work.
 2. ** ACF Single Field ** - Use Single fields in Groups
 
 == Changelog ==
+
+= 1.0.3 =
+Add dependencies management with tgm
+Rename buddyforms_add_form_element_to_select to buddyforms_add_form_element_select_option
+
+= 1.0.2 =
+Support for the form builder select box added
+Make sure we have all in place if people switch from acf free to pro.
+There was also an issue with the field in pro. Should work now with free and pro. Maybe it makes sense to split the plugin into free and pro to have the code separated
+Fixed a incompatible issue with the pro version of acf groups
+Only show form type related form elements
+Fixed a issue with the conditional logic
+Fixed a issue with acf field groups not getting saved.
+Rename acf to acf-group if type is acf group
 
 = 1.0.1 =
 * There have been some wired css issues. Fixed now by  wp_dequeue_style colors-fresh.
