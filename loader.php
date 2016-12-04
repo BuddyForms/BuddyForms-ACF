@@ -4,7 +4,7 @@
  Plugin Name: BuddyForms Advanced Custom Fields
  Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
  Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
- Version: 1.0.2
+ Version: 1.0.4
  Author: Sven Lehnert
  Author URI: https://profiles.wordpress.org/svenl77
  License: GPLv2 or later
@@ -35,7 +35,7 @@ class BuddyFormsACF {
 	/**
 	 * @var string
 	 */
-	public $version = '1.0.2';
+	public $version = '1.0.4';
 
 	/**
 	 * Initiate the class
@@ -192,21 +192,24 @@ add_action('init', function(){
 	require ( dirname(__FILE__) . '/includes/resources/tgm/class-tgm-plugin-activation.php' );
 
 	// Hook required plugins function to the tgmpa_register action
-	add_action( 'tgmpa_register', function(){
+	add_action( 'tgmpa_register', function() {
+
 
 		// Create the required plugins array
-		$plugins = array(
-			array(
-				'name'              => 'Advanced Custom Fields',
-				'slug'              => 'advanced-custom-fields',
-				'required'          => true,
-			),
-			array(
-				'name'              => 'BuddyForms',
-				'slug'              => 'buddyforms',
-				'required'          => true,
-			),
+		$plugins['advanced-custom-fields'] = array(
+			'name'     => 'Advanced Custom Fields',
+			'slug'     => 'advanced-custom-fields',
+			'required' => true,
 		);
+
+
+		if ( ! defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
+			$plugins['buddyforms'] = array(
+				'name'      => 'BuddyForms',
+				'slug'      => 'buddyforms',
+				'required'  => true,
+			);
+		}
 
 		$config = array(
 			'id'           => 'buddyforms-tgmpa',  // Unique ID for hashing notices for multiple instances of TGMPA.
