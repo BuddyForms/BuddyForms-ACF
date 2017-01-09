@@ -4,7 +4,7 @@
  Plugin Name: BuddyForms Advanced Custom Fields
  Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
  Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
- Version: 1.0.4
+ Version: 1.0.5
  Author: Sven Lehnert
  Author URI: https://profiles.wordpress.org/svenl77
  License: GPLv2 or later
@@ -35,7 +35,7 @@ class BuddyFormsACF {
 	/**
 	 * @var string
 	 */
-	public $version = '1.0.4';
+	public $version = '1.0.5';
 
 	/**
 	 * Initiate the class
@@ -194,35 +194,46 @@ add_action('init', function(){
 	// Hook required plugins function to the tgmpa_register action
 	add_action( 'tgmpa_register', function() {
 
+		$bf_acf_depand = false;
+		if( ! class_exists('acf') ) {
+			$bf_acf_depand = true;
+			// Create the required plugins array
+			$plugins['advanced-custom-fields'] = array(
+				'name'     => 'Advanced Custom Fields',
+				'slug'     => 'advanced-custom-fields',
+				'required' => true,
+			);
 
-		// Create the required plugins array
-		$plugins['advanced-custom-fields'] = array(
-			'name'     => 'Advanced Custom Fields',
-			'slug'     => 'advanced-custom-fields',
-			'required' => true,
-		);
-
+		}
 
 		if ( ! defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
+			$bf_acf_depand = true;
 			$plugins['buddyforms'] = array(
 				'name'      => 'BuddyForms',
 				'slug'      => 'buddyforms',
 				'required'  => true,
 			);
 		}
+		if($bf_acf_depand) {
+			$config = array(
+				'id'           => 'buddyforms-tgmpa',
+				// Unique ID for hashing notices for multiple instances of TGMPA.
+				'parent_slug'  => 'plugins.php',
+				// Parent menu slug.
+				'capability'   => 'manage_options',
+				// Capability needed to view plugin install page, should be a capability associated with the parent menu used.
+				'has_notices'  => true,
+				// Show admin notices or not.
+				'dismissable'  => false,
+				// If false, a user cannot dismiss the nag message.
+				'is_automatic' => true,
+				// Automatically activate plugins after installation or not.
+			);
 
-		$config = array(
-			'id'           => 'buddyforms-tgmpa',  // Unique ID for hashing notices for multiple instances of TGMPA.
-			'parent_slug'  => 'plugins.php',       // Parent menu slug.
-			'capability'   => 'manage_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
-			'has_notices'  => true,                // Show admin notices or not.
-			'dismissable'  => false,               // If false, a user cannot dismiss the nag message.
-			'is_automatic' => true,                // Automatically activate plugins after installation or not.
-		);
 
-		// Call the tgmpa function to register the required plugins
-		tgmpa( $plugins, $config );
-
+			// Call the tgmpa function to register the required plugins
+			tgmpa( $plugins, $config );
+		}
 	} );
 }, 1, 1);
 
