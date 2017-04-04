@@ -5,8 +5,8 @@
  Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
  Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
  Version: 1.0.5
- Author: Sven Lehnert
- Author URI: https://profiles.wordpress.org/svenl77
+ Author: ThemeKraft
+ Author URI: https://themekraft.com/buddyforms/
  License: GPLv2 or later
  Network: false
 
