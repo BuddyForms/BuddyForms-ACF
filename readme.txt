@@ -96,7 +96,7 @@ You need the BuddyForms plugin installed for the plugin to work.
 Freemius integration
 
 = 1.0.5 =
-fixed a tgm issue if acf pro was installed it still asked for acf free
+fixed a tgm issue if acf was installed it still asked for acf free
 
 = 1.0.4 =
 Fixed an issue with the dependencies management. If pro was activated it still ask for the free version. Fixed now with a new default BUDDYFORMS_PRO_VERSION in the core to check if the pro is active.

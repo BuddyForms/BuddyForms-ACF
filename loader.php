@@ -47,8 +47,8 @@ class BuddyFormsACF {
 
 		add_action( 'init', array( $this, 'includes' ), 4, 1 );
 		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'buddyforms_acf_admin_js' ), 2, 10 );
-		add_action( 'buddyforms_front_js_css_enqueue', array( $this, 'buddyforms_acf_front_js_css_enqueue' ), 2, 1 );
+		add_action( 'buddyforms_admin_js_css_enqueue', array( $this, 'buddyforms_acf_admin_js' ) );
+		add_action( 'init', array( $this, 'buddyforms_acf_front_js_css_enqueue' ), 2, 1 );
 
 		$this->load_constants();
 
@@ -129,9 +129,10 @@ class BuddyFormsACF {
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
 		) {
-			wp_enqueue_script( 'bf-acf', plugins_url( 'assets/admin/js/form-builder.js', __FILE__ ), array( 'jquery' ) );
+			wp_enqueue_script( 'buddyforms-acf-form-builder-js', plugins_url( 'assets/admin/js/form-builder.js', __FILE__ ), array( 'jquery' ) );
 		}
 	}
+
 
 	/**
 	 * Enqueue the needed JS for the frontend
@@ -140,37 +141,40 @@ class BuddyFormsACF {
 	 * @since 0.1
 	 */
 	function buddyforms_acf_front_js_css_enqueue() {
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script(
-			'iris',
-			admin_url( 'js/iris.min.js' ),
-			array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ),
-			false,
-			1
-		);
-		wp_enqueue_script(
-			'wp-color-picker',
-			admin_url( 'js/color-picker.min.js' ),
-			array( 'iris' ),
-			false,
-			1
-		);
-		$colorpicker_l10n = array(
-			'clear'         => __( 'Clear' ),
-			'defaultString' => __( 'Default' ),
-			'pick'          => __( 'Select Color' )
-		);
-		wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
 
-		if(function_exists('acf_form_head')){
-			acf_form_head();
+		if ( ! post_type_exists( 'acf-field-group' ) ) {
+			wp_enqueue_style( 'wp-color-picker' );
+			wp_enqueue_script(
+				'iris',
+				admin_url( 'js/iris.min.js' ),
+				array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ),
+				false,
+				1
+			);
+			wp_enqueue_script(
+				'wp-color-picker',
+				admin_url( 'js/color-picker.min.js' ),
+				array( 'iris' ),
+				false,
+				1
+			);
+			$colorpicker_l10n = array(
+				'clear'         => __( 'Clear' ),
+				'defaultString' => __( 'Default' ),
+				'pick'          => __( 'Select Color' )
+			);
+			wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
+
+			// dequeue wp styling
+			wp_dequeue_style( array(
+				'colors-fresh'
+			) );
+
 		}
 
-		// dequeue wp styling
-		wp_dequeue_style( array(
-			'colors-fresh'
-		) );
-
+		if( function_exists('acf_form_head' ) ){
+			acf_form_head();
+		}
 
 	}
 }
