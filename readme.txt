@@ -2,8 +2,8 @@
 Contributors: svenl77, konradS, themekraft, buddyforms
 Tags: acf, advanced custom fields, buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, moderation, revision
 Requires at least: 3.9
-Tested up to: 4.7.3
-Stable tag: 1.0.6
+Tested up to: 4.8.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,28 +92,40 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 == Changelog ==
 
-= 1.0.5 =
-Freemius integration
+= 1.1 =
+* Added conditional logic. Works only with ACF Groups
+* Acf field groups should work now nice in free and pro of acf
+* Make the JavaScript work with ACF single if multiple single are in the same form.
+* Conditional logic only works with field groups. Clean up all conditional code from single field.
+* Added the label to the acf fields.
+* Make all work even if you switch from free to pro or pro to free of ACF or if you have both activated.
+* Added support for google maps, date, color picker, taxonomies and all other js based form elements.
+* all form elements of ACF free and pro are now supported.
+* Several smaller fixes
+* Code clean up
 
 = 1.0.5 =
-fixed a tgm issue if acf was installed it still asked for acf free
+* Freemius integration
+
+= 1.0.5 =
+* fixed a tgm issue if acf was installed it still asked for acf free
 
 = 1.0.4 =
-Fixed an issue with the dependencies management. If pro was activated it still ask for the free version. Fixed now with a new default BUDDYFORMS_PRO_VERSION in the core to check if the pro is active.
+* Fixed an issue with the dependencies management. If pro was activated it still ask for the free version. Fixed now with a new default BUDDYFORMS_PRO_VERSION in the core to check if the pro is active.
 
 = 1.0.3 =
-Add dependencies management with tgm
-Rename buddyforms_add_form_element_to_select to buddyforms_add_form_element_select_option
+* Add dependencies management with tgm
+* Rename buddyforms_add_form_element_to_select to buddyforms_add_form_element_select_option
 
 = 1.0.2 =
-Support for the form builder select box added
-Make sure we have all in place if people switch from acf free to pro.
-There was also an issue with the field in pro. Should work now with free and pro. Maybe it makes sense to split the plugin into free and pro to have the code separated
-Fixed a incompatible issue with the pro version of acf groups
-Only show form type related form elements
-Fixed a issue with the conditional logic
-Fixed a issue with acf field groups not getting saved.
-Rename acf to acf-group if type is acf group
+* Support for the form builder select box added
+* Make sure we have all in place if people switch from acf free to pro.
+* There was also an issue with the field in pro. Should work now with free and pro. Maybe it makes sense to split the plugin into free and pro to have the code separated
+* Fixed a incompatible issue with the pro version of acf groups
+* Only show form type related form elements
+* Fixed a issue with the conditional logic
+* Fixed a issue with acf field groups not getting saved.
+* Rename acf to acf-group if type is acf group
 
 = 1.0.1 =
 * There have been some wired css issues. Fixed now by  wp_dequeue_style colors-fresh.

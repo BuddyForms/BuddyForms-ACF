@@ -103,7 +103,7 @@ function buddyforms_acf_form_builder_form_elements( $form_fields, $form_slug, $f
 			}
 			$form_fields['general']['name']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", $name );
 
-			$form_fields['advanced']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'acf_field_key' );
+			$form_fields['general']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'acf_field_key' );
 			$form_fields['general']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			$form_fields['general']['order'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array( 'id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order' ) );
 			break;
@@ -139,7 +139,7 @@ function buddyforms_acf_form_builder_form_elements( $form_fields, $form_slug, $f
 			}
 			$form_fields['general']['name'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", $name );
 
-			$form_fields['advanced']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'acf-fields-group' );
+			$form_fields['general']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'acf-fields-group' );
 			$form_fields['general']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			$form_fields['general']['order'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array( 'id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order' ) );
 			break;
@@ -353,8 +353,8 @@ function buddyforms_acf_update_post_meta( $customfield, $post_id ) {
 				update_field( $customfield['acf_field'], $_POST['acf'][$customfield['acf_field']], $post_id );
 			}
 		} else {
-			if ( isset( $_POST[ $customfield['acf_field'] ] ) ) {
-				update_field( $customfield['acf_field'], $_POST[$customfield['acf_field']], $post_id );
+			if ( isset( $_POST['fields'][ $customfield['acf_field'] ] ) ) {
+				update_field( $customfield['acf_field'], $_POST['fields'][$customfield['acf_field']], $post_id );
 			}
 		}
 	}
