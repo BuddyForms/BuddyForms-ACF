@@ -183,7 +183,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				return $form;
 			}
 
-			$field = get_field_object( $customfield['acf_field'], $post_id );
+			$field = get_field_object( $customfield['acf_field'], $post_id, false );
 
 			// make sure we have a field key. If user switc from free to pro ACF this can happen so we need to catch it...
 			if( !isset( $field['key'] ) ){
