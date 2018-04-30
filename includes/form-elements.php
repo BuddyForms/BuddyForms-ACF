@@ -222,7 +222,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 			$acf_form_field = str_replace( 'acf-input-wrap', '', $acf_form_field );
 
 			if ( $field['instructions'] ) {
-				$tmp .= '<smal>' . $field['instructions'] . '</smal>';
+				$tmp .= '<span class="help-inline">' . $field['instructions'] . '</span>';
 			}
 
 			$tmp .= '<div class="bf_inputs"> ' . $acf_form_field . '</div> ';
@@ -282,7 +282,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 					$acf_form_field = str_replace( 'acf-input-wrap', '', $acf_form_field );
 
 					if ( $field['instructions'] ) {
-						$tmp .= '<smal>' . $field['instructions'] . '</smal>';
+						$tmp .= '<span class="help-inline">' . $field['instructions'] . '</span>';
 					}
 
 					$tmp .= '<div class="bf_inputs"> ' . $acf_form_field . '</div> ';
