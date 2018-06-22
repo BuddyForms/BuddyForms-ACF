@@ -1,9 +1,9 @@
 === BuddyForms ACF ===
 Contributors: svenl77, konradS, themekraft, buddyforms
 Tags: acf, advanced custom fields, buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, moderation, revision
-Requires at least: 3.9
-Tested up to: 4.8.1
-Stable tag: 1.1
+Requires at least: 4.0
+Tested up to: 4.9
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,12 @@ You need the BuddyForms plugin installed for the plugin to work.
 2. ** ACF Single Field ** - Use Single fields in Groups
 
 == Changelog ==
+
+= 1.2 =
+* Freemius update
+* Fixed an issue reported and fixed by Patty When ACF goes to render the field it expects the value just to be an array of ids
+* Changed the acf instructions form smal to span with class help-inline. props go to Patty for letting me know!
+* Added Text Domain: buddyforms
 
 = 1.1 =
 * Added conditional logic. Works only with ACF Groups
