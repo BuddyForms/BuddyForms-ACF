@@ -183,7 +183,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				return $form;
 			}
 
-			$field = get_field_object( $customfield['acf_field'], $post_id, false );
+      $field = get_field_object( $customfield['acf_field'], $post_id, false );
 
 			// make sure we have a field key. If user switc from free to pro ACF this can happen so we need to catch it...
 			if( !isset( $field['key'] ) ){
@@ -269,7 +269,14 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				// Create the BuddyForms Form Element Structure
 				if ( post_type_exists( 'acf-field-group' ) ) {
 					// Create the BuddyForms Form Element Structure
-					$tmp .= '<div id="acf-' . $field['name'] . '" class="bf_field acf-field acf-field-' . str_replace( "_", "-", $field_type ) . ' acf-' . str_replace( "_", "-", $field['key'] ) . ' ' . $required_class . '" data-name="' . $field['name'] . '" data-key="' . $field['key'] . '" data-type="' . $field['type'] . '"><label for="' . $field['name'] . '">' . $field['label'] . '</label>';
+
+                    if( !empty($field['conditional_logic'])){
+                        $rule = esc_html(json_encode($field['conditional_logic']));
+                        $tmp .= '<div id="acf-' . $field['name'] . '" class="bf_field acf-field acf-field-' . str_replace( "_", "-", $field_type ) . ' acf-' . str_replace( "_", "-", $field['key'] ) . ' ' . $required_class . '" data-name="' . $field['name'] . '" data-key="' . $field['key'] . '" data-type="' . $field['type'] . '" data-conditions="'. $rule.'"  ><label for="' . $field['name'] . '"  >' . $field['label'] . '</label>';
+                    }else{
+                        $tmp .= '<div id="acf-' . $field['name'] . '" class="bf_field acf-field acf-field-' . str_replace( "_", "-", $field_type ) . ' acf-' . str_replace( "_", "-", $field['key'] ) . ' ' . $required_class . '" data-name="' . $field['name'] . '" data-key="' . $field['key'] . '" data-type="' . $field['type'] . '"  ><label for="' . $field['name'] . '"  >' . $field['label'] . '</label>';
+                    }
+
 				} else {
 					// Create the BuddyForms Form Element Structure
 					$tmp .= '<div id="acf-' . $field['name'] . '" class="bf_field_group field field_type-' . $field_type . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field_type . '"><label for="' . $field['name'] . '"><label for="' . $field['name'] . '">' . $field['label'] . '</label>';
@@ -287,12 +294,10 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 					$tmp .= '<div class="bf_inputs"> ' . $acf_form_field . '</div> ';
 					ob_start();
-					if( !empty($field['conditional_logic'])): ?>
-						<script type="text/javascript">
-                            <?php if ( post_type_exists( 'acf-field-group' ) ) { ?>
-	                            if(typeof acf !== 'undefined'){ acf.conditional_logic.add( '<?php echo $field['key']; ?>', <?php echo json_encode($field['conditional_logic']); ?>); }
-                            <?php } ?>
-						</script>
+					if( !empty($field['conditional_logic'])):
+          error_log(print_r($field['conditional_logic'], true));
+          ?>
+
 					<?php endif;
 
 
