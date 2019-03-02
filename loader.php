@@ -4,7 +4,7 @@
 Plugin Name: BuddyForms Advanced Custom Fields
 Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
 Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
-Version: 1.2.1
+Version: 1.2.2
 Author: ThemeKraft
 Author URI: https://themekraft.com/buddyforms/
 License: GPLv2 or later
@@ -34,7 +34,7 @@ class BuddyFormsACF
     /**
      * @var string
      */
-    public  $version = '1.2.1' ;
+    public  $version = '1.2.2' ;
     /**
      * Initiate the class
      *
@@ -246,21 +246,14 @@ function buddyforms_acf_fs()
     global  $buddyforms_acf_fs ;
     
     if ( !isset( $buddyforms_acf_fs ) ) {
-        // Include Freemius SDK.
-        
-        if ( file_exists( dirname( dirname( __FILE__ ) ) . '/buddyforms/includes/resources/freemius/start.php' ) ) {
-            // Try to load SDK from parent plugin folder.
-            require_once dirname( dirname( __FILE__ ) ) . '/buddyforms/includes/resources/freemius/start.php';
-        } else {
-            
-            if ( file_exists( dirname( dirname( __FILE__ ) ) . '/buddyforms-premium/includes/resources/freemius/start.php' ) ) {
-                // Try to load SDK from premium parent plugin folder.
-                require_once dirname( dirname( __FILE__ ) ) . '/buddyforms-premium/includes/resources/freemius/start.php';
-            } else {
-                require_once dirname( __FILE__ ) . '/includes/resources/freemius/start.php';
-            }
-        
-        }
+	    // Include Freemius SDK.
+	    if ( file_exists( dirname( dirname( __FILE__ ) ) . '/buddyforms/includes/resources/freemius/start.php' ) ) {
+		    // Try to load SDK from parent plugin folder.
+		    require_once dirname( dirname( __FILE__ ) ) . '/buddyforms/includes/resources/freemius/start.php';
+	    } else if ( file_exists( dirname( dirname( __FILE__ ) ) . '/buddyforms-premium/includes/resources/freemius/start.php' ) ) {
+		    // Try to load SDK from premium parent plugin folder.
+		    require_once dirname( dirname( __FILE__ ) ) . '/buddyforms-premium/includes/resources/freemius/start.php';
+	    }
         
         $buddyforms_acf_fs = fs_dynamic_init( array(
             'id'             => '410',
