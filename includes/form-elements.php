@@ -233,11 +233,12 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 			break;
 		case 'acf-group':
 
-			$post_id = $post_id == 0 ? 'new_post' : $post_id;
+			$post_id = empty($post_id) ? 'new_post' : $post_id;
 
 			// load fields
 			if ( post_type_exists( 'acf-field-group' ) ) {
-				$fields = acf_get_fields( (int)$customfield['acf_group'] );
+				$parent = (int) $customfield['acf_group'];
+				$fields = acf_get_fields( $parent );
 			} else {
 				$fields = apply_filters( 'acf/field_group/get_fields', array(), $customfield['acf_group'] );
 			}
@@ -258,7 +259,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				}
 
 				ob_start();
-					create_field( $field, $post_id );
+					create_field( $field );
 				$acf_form_field = ob_get_clean();
 
 				$required_class = '';
@@ -295,7 +296,6 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 					$tmp .= '<div class="bf_inputs"> ' . $acf_form_field . '</div> ';
 					ob_start();
 					if( !empty($field['conditional_logic'])):
-          error_log(print_r($field['conditional_logic'], true));
           ?>
 
 					<?php endif;
