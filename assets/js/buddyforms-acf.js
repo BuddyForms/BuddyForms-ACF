@@ -43,9 +43,12 @@ acf.add_filter('validation_complete', function (json, $form) {
 
     // check errors
     if (json.errors) {
-        // do something
+        for(var i=0; i < json.errors.length; i++){
+            var input_name = json.errors[i].input;
+            var message = json.errors[i].message;
+                jQuery('[name="'+input_name+'"]').after("<label id='id_"+input_name+"' class='error'>"+message+"</label>");
+        }
     }
-
     // return
     return json;
 });
