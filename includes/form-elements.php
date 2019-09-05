@@ -152,11 +152,13 @@ function buddyforms_acf_form_builder_form_elements( $form_fields, $form_slug, $f
 add_action( 'acf/input/admin_enqueue_scripts', 'buddyforms_acf_form_builder_form_elements_enqueue_scripts' );
 
 function buddyforms_acf_form_builder_form_elements_enqueue_scripts() {
-	wp_enqueue_script( 'buddyforms-acf-js', BUDDYFORMS_ACF_PLUGIN_URL . '/assets/js/buddyforms-acf.js', array(
-		'jquery',
-		'acf-input',
-		'buddyforms-js'
-	) );
+	if ( ! is_admin() ) {
+		wp_enqueue_script( 'buddyforms-acf-js', BUDDYFORMS_ACF_PLUGIN_URL . '/assets/js/buddyforms-acf.js', array(
+			'jquery',
+			'acf-input',
+			'buddyforms-js'
+		) );
+	}
 }
 
 add_filter( 'buddyforms_form_element_add_field', 'buddyforms_acf_form_builder_form_elements', 1, 5 );
