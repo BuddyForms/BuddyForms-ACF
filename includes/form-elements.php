@@ -149,6 +149,16 @@ function buddyforms_acf_form_builder_form_elements( $form_fields, $form_slug, $f
 	return $form_fields;
 }
 
+add_action( 'acf/input/admin_enqueue_scripts', 'buddyforms_acf_form_builder_form_elements_enqueue_scripts' );
+
+function buddyforms_acf_form_builder_form_elements_enqueue_scripts() {
+	wp_enqueue_script( 'buddyforms-acf-js', BUDDYFORMS_ACF_PLUGIN_URL . '/assets/js/buddyforms-acf.js', array(
+		'jquery',
+		'acf-input',
+		'buddyforms-js'
+	) );
+}
+
 add_filter( 'buddyforms_form_element_add_field', 'buddyforms_acf_form_builder_form_elements', 1, 5 );
 
 /*
@@ -224,12 +234,12 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				$tmp            = str_replace( '</label>', '&nbsp;<span class="required" aria-required="true">&nbsp;&ast;&nbsp;</span>&nbsp;</label>', $tmp );
 				$acf_form_field = str_replace( 'type=', 'required type=', $acf_form_field );
 			}
-			$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs', $acf_form_field );
-			if ( strpos( $acf_form_field, 'class=' ) === false ) {
-				$acf_form_field = str_replace( 'class="', 'class="settings-input form-control ', $acf_form_field );
-			} else {
-				$acf_form_field = str_replace( 'id="', 'class="settings-input form-control" id="', $acf_form_field );
-			}
+//			$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs', $acf_form_field );
+//			if ( strpos( $acf_form_field, 'class=' ) === false ) {
+//				$acf_form_field = str_replace( 'class="', 'class="settings-input form-control ', $acf_form_field );
+//			} else {
+//				$acf_form_field = str_replace( 'id="', 'class="settings-input form-control" id="', $acf_form_field );
+//			}
 
 			if ( $field['instructions'] ) {
 				$tmp .= '<span class="help-inline">' . $field['instructions'] . '</span>';
@@ -238,11 +248,6 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 			$tmp .= $acf_form_field;
 			$tmp .= '</div>';
-
-			wp_enqueue_script( 'buddyforms-acf-js', BUDDYFORMS_ACF_PLUGIN_URL . '/assets/js/buddyforms-acf.js', array(
-				'jquery',
-				'buddyforms-js'
-			) );
 
 			$form->addElement( new Element_HTML( $tmp ) );
 
@@ -400,23 +405,25 @@ add_action( 'buddyforms_update_post_meta', 'buddyforms_acf_update_post_meta', 10
 function buddyforms_acf_get_fields() {
 
 	// load fields
+	$fields = array();
 	if ( post_type_exists( 'acf-field-group' ) ) {
-		if ( $_POST['fields_group_id'] ) {
+		if ( ! empty( $_POST['fields_group_id'] ) ) {
 			$fields = acf_get_fields( $_POST['fields_group_id'] );
 		}
 	} else {
-		if ( $_POST['fields_group_id'] ) {
+		if ( ! empty( $_POST['fields_group_id'] ) ) {
 			$fields = apply_filters( 'acf/field_group/get_fields', array(), $_POST['fields_group_id'] );
 		}
 	}
 
 	$field_select = Array();
-	foreach ( $fields as $field ) {
-		if ( $field['name'] ) {
-			$field_select[ $field['key'] ] = $field['label'];
+	if ( ! empty( $fields ) ) {
+		foreach ( $fields as $field ) {
+			if ( $field['name'] ) {
+				$field_select[ $field['key'] ] = $field['label'];
+			}
 		}
 	}
-
 	echo json_encode( $field_select );
 	die();
 }
