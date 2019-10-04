@@ -69,8 +69,9 @@ jQuery(document).ready(function () {
         BuddyFormsHooks.addFilter('buddyforms:validation:ignore', function (ignore, arguments) {
             if (arguments[0] && arguments[1] && arguments[2] && buddyformsGlobal[arguments[2]]) {
                 var targetElement = arguments[0][0];
+                var targetElementName = jQuery(targetElement).attr('name');
                 var isAcfElment = jQuery(targetElement).closest('.bf_field.bf_field_group.acf-field');
-                if(isAcfElment.length > 0){
+                if(isAcfElment.length > 0 || (targetElementName && targetElementName.indexOf('acf[') >= 0 )){
                     return true;
                 }
             }
