@@ -65,5 +65,16 @@ jQuery(document).ready(function () {
                 }
             });
         }, 10);
+
+        BuddyFormsHooks.addFilter('buddyforms:validation:ignore', function (ignore, arguments) {
+            if (arguments[0] && arguments[1] && arguments[2] && buddyformsGlobal[arguments[2]]) {
+                var targetElement = arguments[0][0];
+                var isAcfElment = jQuery(targetElement).closest('.bf_field.bf_field_group.acf-field');
+                if(isAcfElment.length > 0){
+                    return true;
+                }
+            }
+            return ignore;
+        }, 10);
     }
 });
