@@ -1,40 +1,40 @@
 <?php
 
 /*
-Plugin Name: BuddyForms Advanced Custom Fields
-Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
-Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
-Version: 1.2.3
-Author: ThemeKraft
-Author URI: https://themekraft.com/buddyforms/
-License: GPLv2 or later
-Network: false
-Text Domain: buddyforms
-
-*****************************************************************************
-*
-* This script is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-****************************************************************************
-*/
+ * Plugin Name: BuddyForms Advanced Custom Fields
+ * Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
+ * Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
+ * Version: 1.2.4
+ * Author: ThemeKraft
+ * Author URI: https://themekraft.com/buddyforms/
+ * License: GPLv2 or later
+ * Network: false
+ * Text Domain: buddyforms
+ * Svn: buddyforms-acf
+ *****************************************************************************
+ *
+ * This script is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ ****************************************************************************
+ */
 
 class BuddyFormsACF {
 	/**
 	 * @var string
 	 */
-	public $version = '1.2.3';
+	public $version = '1.2.4';
 
 	/**
 	 * Initiate the class
