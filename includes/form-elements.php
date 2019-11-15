@@ -320,7 +320,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 					if ( ! empty( $field['conditional_logic'] ) ) {
 						$rule = esc_html( json_encode( $field['conditional_logic'] ) );
-						$field_output  .= sprintf( "<div id=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\" data-conditions=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['name'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $rule, $field['name'], $field['label'] );
+						$field_output  .= sprintf( "<div id=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\" data-conditions=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['name'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $rule, $field['name'], $field['label'] );
 					} else {
 						$field_output .= sprintf( "<div id=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['name'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $field['name'], $field['label'] );
 					}
