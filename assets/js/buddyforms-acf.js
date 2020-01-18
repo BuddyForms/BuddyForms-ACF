@@ -62,7 +62,7 @@ jQuery(document).ready(function () {
         }, 10);
 
         BuddyFormsHooks.addFilter('buddyforms:submit:prevent', function (prevent, args) {
-            var stop = jQuery(args[0]).find('label.error').length;
+            var stop = jQuery(args[0]).find('label.error:visible').length;
             return (stop && stop > 0);
         });
 
