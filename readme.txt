@@ -1,9 +1,9 @@
 === BuddyForms ACF ===
-Contributors: svenl77, konradS, themekraft, buddyforms
+Contributors: svenl77, konradS, themekraft, buddyforms, gfirem
 Tags: acf, advanced custom fields, buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, moderation, revision
 Requires at least: 4.0
-Tested up to: 5.0
-Stable tag: 1.2.4
+Tested up to: 5.3.2
+Stable tag: 1.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,9 +91,12 @@ You need the BuddyForms plugin installed for the plugin to work.
 2. ** ACF Single Field ** - Use Single fields in Groups
 
 == Changelog ==
+= 1.2.5 - 18 Jan 2020 =
+* Fixed the validation issue.
+* Improved compatibility with last version of BuddyForms.
+
 = 1.2.4 - 11 Oct 2019 =
 * Fixed the acf field validation making buddyforms ignore fields from ACF, them ACF field run their own validation.
-
 
 = 1.2.3 - 7 Sept 2019 =
 * Fixed the required signal to look like BF.

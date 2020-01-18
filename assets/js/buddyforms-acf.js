@@ -30,15 +30,19 @@ jQuery(document).ready(function () {
             }
         }
 
+        acf.addAction('valid_field', function(instance){
+            instance.$el.find('label.error').remove();
+        });
+
         acf.add_filter('validation_complete', function (json, $form) {
             if (json.errors) {
                 for (var i = 0; i < json.errors.length; i++) {
                     var input_name = json.errors[i].input;
                     var message = json.errors[i].message;
-                    var targetError = jQuery('label#id_' + input_name);
                     var targetElement = jQuery('[name="' + input_name + '"]');
                     if (targetElement.length > 0) {
-                        targetElement.first().parent().append("<label id='buddyforms_form_" + input_name + "-error' class='error'>" + message + "</label>");
+                        targetElement.first().parent().find('label.error').remove();
+                        targetElement.first().parent().append("<label id='buddyforms_form_" + input_name + "-error' class='error' style='color:red; font-weight: bold; font-style: normal;'>" + message + "</label>");
                     }
                 }
             }
@@ -57,11 +61,18 @@ jQuery(document).ready(function () {
             return fieldData;
         }, 10);
 
-        BuddyFormsHooks.addAction('buddyforms:submit', function (form) {
+        BuddyFormsHooks.addFilter('buddyforms:submit:prevent', function (prevent, args) {
+            var stop = jQuery(args[0]).find('label.error').length;
+            return (stop && stop > 0);
+        });
+
+        BuddyFormsHooks.addAction('buddyforms:submit', function (args) {
+            BuddyFormsHooks.doAction('buddyforms:submit:disable');
             acf.validation.fetch({
-                form: form,
-                complete: function () {
+                form: args,
+                complete: function (response) {
                     jQuery('.acf-notice').hide();
+                    BuddyFormsHooks.doAction('buddyforms:submit:enable');
                 }
             });
         }, 10);
@@ -71,7 +82,7 @@ jQuery(document).ready(function () {
                 var targetElement = arguments[0][0];
                 var targetElementName = jQuery(targetElement).attr('name');
                 var isAcfElment = jQuery(targetElement).closest('.bf_field.bf_field_group.acf-field');
-                if(isAcfElment.length > 0 || (targetElementName && targetElementName.indexOf('acf[') >= 0 )){
+                if (isAcfElment.length > 0 || (targetElementName && targetElementName.indexOf('acf[') >= 0)) {
                     return true;
                 }
             }
