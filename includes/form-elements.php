@@ -353,6 +353,11 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 	return $form;
 }
 
+add_filter('buddyforms_forms_classes', 'buddyforms_acf_form_classes', 10, 3);
+function buddyforms_acf_form_classes($classes, $instance, $form_slug){
+	return 'acf-form '.$classes;
+}
+
 add_filter( 'buddyforms_create_edit_form_display_element', 'buddyforms_acf_frontend_form_elements', 1, 2 );
 
 /*
