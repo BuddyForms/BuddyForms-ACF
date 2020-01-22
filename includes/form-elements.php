@@ -192,7 +192,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 	acf_form_head();
 
-	acf_localize_data(array('screen'=> 'buddyforms_form_acf-test-requires', 'post_id'=> $post_id, 'validation'=>true));
+	acf_localize_data( array( 'screen' => 'buddyforms_form_acf-test-requires', 'post_id' => $post_id, 'validation' => true ) );
 
 
 	switch ( $customfield['type'] ) {
@@ -229,16 +229,21 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 			$acf_form_field = ob_get_clean();
 			$required_class = '';
 
+			$acf_wrapper = array( 'class' => '' );
+			if ( isset( $field['wrapper'] ) ) {
+				$acf_wrapper = $field['wrapper'];
+			}
+
 			// if the field type is not set for any reason, make it a text field. This check is again in tplace for people how switch from pro to free and have some elements with no type
 			$field_type = isset( $field['type'] ) ? $field['type'] : 'text';
 
 			// Create the BuddyForms Form Element Structure
 			if ( post_type_exists( 'acf-field-group' ) ) {
 				// Create the BuddyForms Form Element Structure
-				$tmp .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field bf_field_group acf-field acf-field-%s acf-%s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"><label for=\"%s\">%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $required_class, $field['name'], $field['key'], $field['type'], 'acf-'.$field['key'], $field['label'] );
+				$tmp .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field bf_field_group acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"><label for=\"%s\">%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], 'acf-' . $field['key'], $field['label'] );
 			} else {
 				// Create the BuddyForms Form Element Structure
-				$tmp .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s%s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\"><label for=\"%s\"><label for=\"%s\">%s</label>", $field['key'], $field_type, $field['key'], $required_class, $field['name'], $field['key'], $field_type, $field['name'], 'acf-'.$field['key'], $field['label'] );
+				$tmp .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s %s %s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\"><label for=\"%s\"><label for=\"%s\">%s</label>", $field['key'], $field_type, $field['key'], $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field_type, $field['name'], 'acf-' . $field['key'], $field['label'] );
 			}
 
 			if ( $field['required'] ) {
@@ -306,6 +311,11 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 				$required_class = '';
 
+				$acf_wrapper = array( 'class' => '' );
+				if ( isset( $field['wrapper'] ) ) {
+					$acf_wrapper = $field['wrapper'];
+				}
+
 				// if the field type is not set for any reason, make it a text field. This check is again in tplace for people how switch from pro to free and have some elements with no type
 				$field_type = isset( $field['type'] ) ? $field['type'] : 'text';
 
@@ -314,19 +324,19 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 					// Create the BuddyForms Form Element Structure
 
 					if ( ! empty( $field['conditional_logic'] ) ) {
-						$rule = esc_html( json_encode( $field['conditional_logic'] ) );
-						$field_output  .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\" data-conditions=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $required_class, $field['name'], $field['key'], $field['type'], $rule, $field['name'], $field['label'] );
+						$rule         = esc_html( json_encode( $field['conditional_logic'] ) );
+						$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\" data-conditions=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $rule, $field['name'], $field['label'] );
 					} else {
-						$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $required_class, $field['name'], $field['key'], $field['type'], $field['name'], $field['label'] );
+						$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $field['name'], $field['label'] );
 					}
 
 				} else {
 					// Create the BuddyForms Form Element Structure
-					$field_output .= sprintf( "<div id=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s%s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\"><label for=\"%s\"><label for=\"%s\">%s</label>", $field['key'], $field_type, $field['key'], $required_class, $field['name'], $field['key'], $field_type, $field['name'], $field['name'], $field['label'] );
+					$field_output .= sprintf( "<div id=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s %s %s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\"><label for=\"%s\"><label for=\"%s\">%s</label>", $field['key'], $field_type, $field['key'], $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field_type, $field['name'], $field['name'], $field['label'] );
 				}
 
 				if ( $field['required'] ) {
-					$field_output            = str_replace( '</label>', '&nbsp;<span class="required is-required" aria-required="true">&nbsp;&ast;&nbsp;</span>&nbsp;</label>', $field_output );
+					$field_output   = str_replace( '</label>', '&nbsp;<span class="required is-required" aria-required="true">&nbsp;&ast;&nbsp;</span>&nbsp;</label>', $field_output );
 					$acf_form_field = str_replace( 'type=', 'required="required" type=', $acf_form_field );
 				}
 				$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs acf-input acf-input-wrap', $acf_form_field );
@@ -342,7 +352,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 				<?php endif;
 
-				echo $field_output.'</div>';
+				echo $field_output . '</div>';
 				$tmp .= ob_get_clean();
 			}
 
@@ -353,9 +363,9 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 	return $form;
 }
 
-add_filter('buddyforms_forms_classes', 'buddyforms_acf_form_classes', 10, 3);
-function buddyforms_acf_form_classes($classes, $instance, $form_slug){
-	return 'acf-form '.$classes;
+add_filter( 'buddyforms_forms_classes', 'buddyforms_acf_form_classes', 10, 3 );
+function buddyforms_acf_form_classes( $classes, $instance, $form_slug ) {
+	return 'acf-form ' . $classes;
 }
 
 add_filter( 'buddyforms_create_edit_form_display_element', 'buddyforms_acf_frontend_form_elements', 1, 2 );
