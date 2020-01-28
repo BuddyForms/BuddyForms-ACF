@@ -157,7 +157,7 @@ function buddyforms_acf_form_builder_form_elements_enqueue_scripts() {
 			'jquery',
 			'acf-input',
 			'buddyforms-js'
-		) );
+		), BuddyFormsACF::getVersion() );
 	}
 }
 

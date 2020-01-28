@@ -34,7 +34,7 @@ class BuddyFormsACF {
 	/**
 	 * @var string
 	 */
-	public $version = '1.2.8';
+	public static $version = '1.2.8';
 
 	/**
 	 * Initiate the class
@@ -48,6 +48,15 @@ class BuddyFormsACF {
 		add_action( 'buddyforms_admin_js_css_enqueue', array( $this, 'buddyforms_acf_admin_js' ) );
 		add_action( 'init', array( $this, 'buddyforms_acf_front_js_css_enqueue' ), 2, 1 );
 		$this->load_constants();
+	}
+
+	/**
+	 * Get plugin version
+	 *
+	 * @return string
+	 */
+	static function getVersion() {
+		return self::$version;
 	}
 
 	/**
