@@ -199,7 +199,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 		case 'acf-field':
 			$post_id = $post_id == 0 ? 'new_post' : $post_id;
 
-			$tmp = '<div class="bf-input">';
+			$tmp = '';
 
 			if ( ! $nonce ) {
 				$tmp .= '<input type="hidden" name="_acfnonce" value="' . wp_create_nonce( 'input' ) . '" />';
@@ -224,9 +224,12 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 			} else {
 				do_action( 'acf/create_field', $field, $post_id );
 			}
-
-
 			$acf_form_field = ob_get_clean();
+
+			if ( empty( $acf_form_field ) ) {
+				continue;
+			}
+
 			$required_class = '';
 
 			$acf_wrapper = array( 'class' => '' );
@@ -347,11 +350,6 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 				$field_output .= $acf_form_field;
 				ob_start();
-				if ( ! empty( $field['conditional_logic'] ) ):
-					?>
-
-				<?php endif;
-
 				echo $field_output . '</div>';
 				$tmp .= ob_get_clean();
 			}
