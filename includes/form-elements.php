@@ -1,16 +1,16 @@
 <?php
 
 /*
- * Add ACF form elementrs in the form elements select box
+ * Add ACF form elements in the form elements select box
  */
 function buddyforms_acf_elements_to_select( $elements_select_options ) {
 	global $post;
 
 	if ( $post->post_type != 'buddyforms' ) {
-		return;
+		return $elements_select_options;
 	}
 	$elements_select_options['acf']['label']               = 'ACF';
-	$elements_select_options['acf']['class']               = 'bf_show_if_f_type_post';
+	$elements_select_options['acf']['class']               = 'bf_show_if_f_type_all';
 	$elements_select_options['acf']['fields']['acf-field'] = array(
 		'label' => __( 'ACF Field', 'buddyforms' ),
 	);
@@ -379,6 +379,17 @@ function buddyforms_acf_update_post_meta( $customfield, $post_id ) {
 
 		$fields = array();
 
+		global $buddyforms, $form_slug;
+
+		$form_type = '';
+		if ( ! empty( $buddyforms ) && ! empty( $form_slug ) && ! empty( $buddyforms[ $form_slug ] ) ) {
+			$form_type = ! empty( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
+		}
+
+		if ( ! empty( $form_type ) && $form_type === 'registration' ) {
+			$post_id = sprintf( 'user_%s', $post_id );
+		}
+
 		// load fields
 		if ( post_type_exists( 'acf-field-group' ) ) {
 			$fields = acf_get_fields( $group_ID );
@@ -398,12 +409,11 @@ function buddyforms_acf_update_post_meta( $customfield, $post_id ) {
 					if ( isset( $_POST[ $field['name'] ] ) ) {
 						update_field( $field['key'], $_POST[ $field['name'] ], $post_id );
 					}
-
 				}
 			}
 		}
-
 	}
+
 	if ( $customfield['type'] == 'acf-field' ) {
 		if ( post_type_exists( 'acf-field-group' ) ) {
 			if ( isset( $_POST['acf'][ $customfield['acf_field'] ] ) ) {
