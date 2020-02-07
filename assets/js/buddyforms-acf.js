@@ -24,7 +24,8 @@ jQuery(document).ready(function () {
             BuddyFormsHooks.addAction('buddyforms:submit:click', function (args) {
                 var targetForms = args[0];
                 var target = args[1];
-                var event = args[2];
+                var status = args[2];
+                var event = args[3];
                 event.preventDefault();
                 var formOptions = 'publish';
                 var draftAction = false;
@@ -39,7 +40,7 @@ jQuery(document).ready(function () {
                     if (fieldStatus === false) { //Not exist the field,
                         var statusElement = targetForms.find('input[type="hidden"][name="status"]');
                         if (statusElement && statusElement.length > 0) {
-                            var post_status = jQuery(this).data('status') || formOptions;
+                            var post_status = status || formOptions;
                             statusElement.val(post_status);
                         }
                     }
