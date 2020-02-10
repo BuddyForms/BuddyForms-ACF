@@ -373,11 +373,7 @@ add_filter( 'buddyforms_create_edit_form_display_element', 'buddyforms_acf_front
  *
  */
 function buddyforms_acf_update_post_meta( $customfield, $post_id ) {
-	if ( $customfield['type'] == 'acf-group' ) {
-
-		$group_ID = $customfield['acf_group'];
-
-		$fields = array();
+	if ( $customfield['type'] == 'acf-group' || $customfield['type'] == 'acf-field' ) {
 
 		global $buddyforms, $form_slug;
 
@@ -387,41 +383,47 @@ function buddyforms_acf_update_post_meta( $customfield, $post_id ) {
 		}
 
 		if ( ! empty( $form_type ) && $form_type === 'registration' ) {
-			$post_id = sprintf( 'user_%s', $post_id );
+			$post_id = sprintf( 'user_%s', get_current_user_id() );
 		}
 
-		// load fields
-		if ( post_type_exists( 'acf-field-group' ) ) {
-			$fields = acf_get_fields( $group_ID );
+		if ( $customfield['type'] == 'acf-group' ) {
 
-			if ( $fields ) {
-				foreach ( $fields as $field ) {
-					if ( isset( $_POST['acf'][ $field['key'] ] ) ) {
-						update_field( $field['key'], $_POST['acf'][ $field['key'] ], $post_id );
+			$group_ID = $customfield['acf_group'];
+
+			$fields = array();
+
+			// load fields
+			if ( post_type_exists( 'acf-field-group' ) ) {
+				$fields = acf_get_fields( $group_ID );
+
+				if ( $fields ) {
+					foreach ( $fields as $field ) {
+						if ( isset( $_POST['acf'][ $field['key'] ] ) ) {
+							update_field( $field['key'], $_POST['acf'][ $field['key'] ], $post_id );
+						}
+					}
+				}
+			} else {
+				$fields = apply_filters( 'acf/field_group/get_fields', $fields, $group_ID );
+				if ( $fields ) {
+					foreach ( $fields as $field ) {
+						if ( isset( $_POST[ $field['name'] ] ) ) {
+							update_field( $field['key'], $_POST[ $field['name'] ], $post_id );
+						}
 					}
 				}
 			}
-		} else {
-			$fields = apply_filters( 'acf/field_group/get_fields', $fields, $group_ID );
-			if ( $fields ) {
-				foreach ( $fields as $field ) {
-
-					if ( isset( $_POST[ $field['name'] ] ) ) {
-						update_field( $field['key'], $_POST[ $field['name'] ], $post_id );
-					}
-				}
-			}
 		}
-	}
 
-	if ( $customfield['type'] == 'acf-field' ) {
-		if ( post_type_exists( 'acf-field-group' ) ) {
-			if ( isset( $_POST['acf'][ $customfield['acf_field'] ] ) ) {
-				update_field( $customfield['acf_field'], $_POST['acf'][ $customfield['acf_field'] ], $post_id );
-			}
-		} else {
-			if ( isset( $_POST['fields'][ $customfield['acf_field'] ] ) ) {
-				update_field( $customfield['acf_field'], $_POST['fields'][ $customfield['acf_field'] ], $post_id );
+		if ( $customfield['type'] == 'acf-field' ) {
+			if ( post_type_exists( 'acf-field-group' ) ) {
+				if ( isset( $_POST['acf'][ $customfield['acf_field'] ] ) ) {
+					update_field( $customfield['acf_field'], $_POST['acf'][ $customfield['acf_field'] ], $post_id );
+				}
+			} else {
+				if ( isset( $_POST['fields'][ $customfield['acf_field'] ] ) ) {
+					update_field( $customfield['acf_field'], $_POST['fields'][ $customfield['acf_field'] ], $post_id );
+				}
 			}
 		}
 	}
@@ -456,3 +458,63 @@ function buddyforms_acf_get_fields() {
 }
 
 add_action( 'wp_ajax_buddyforms_acf_get_fields', 'buddyforms_acf_get_fields' );
+
+function buddyforms_acf_process_submission_end( $args ) {
+	extract( $args );
+
+	if ( ! isset( $user_id ) ) {
+		return;
+	}
+
+	global $buddyforms;
+
+	if ( isset( $buddyforms[ $form_slug ] ) ) {
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $field ) {
+				if ( isset( $field['mapped_xprofile_field'] ) && $field['mapped_xprofile_field'] != 'none' ) {
+					$xfield = new BP_XProfile_Field( $field['mapped_xprofile_field'] );
+					if ( function_exists( 'xprofile_set_field_data' ) ) {
+						if ( $field['type'] == 'acf-group' || $field['type'] == 'acf-field' ) {
+							if ( $field['type'] == 'acf-field' ) {
+								if ( post_type_exists( 'acf-field-group' ) ) {
+									$field_value = isset( $_POST['acf'][ $field['acf_field'] ] ) ? $_POST['acf'][ $field['acf_field'] ] : '';
+								} else {
+									$field_value = isset( $_POST['fields'][ $field['acf_field'] ] ) ? $_POST['fields'][ $field['acf_field'] ] : '';
+								}
+								if ( isset( $field_value ) ) {
+									xprofile_set_field_data( $field['mapped_xprofile_field'], $user_id, $field_value );
+								}
+							}
+							if ( $field['type'] == 'acf-group' ) {
+								$group_ID = $field['acf_group'];
+								$fields   = array();
+								// load fields
+								if ( post_type_exists( 'acf-field-group' ) ) {
+									$fields = acf_get_fields( $group_ID );
+									if ( $fields ) {
+										foreach ( $fields as $acf_field ) {
+											if ( isset( $_POST['acf'][ $acf_field['key'] ] ) ) {
+												xprofile_set_field_data( $acf_field['mapped_xprofile_field'], $user_id, $_POST['acf'][ $acf_field['key'] ] );
+											}
+										}
+									}
+								} else {
+									$fields = apply_filters( 'acf/field_group/get_fields', $fields, $group_ID );
+									if ( $fields ) {
+										foreach ( $fields as $acf_field ) {
+											if ( isset( $_POST[ $acf_field['name'] ] ) ) {
+												xprofile_set_field_data( $acf_field['mapped_xprofile_field'], $user_id, $_POST[ $acf_field['name'] ] );
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+add_action( 'buddyforms_process_submission_end', 'buddyforms_acf_process_submission_end', 99, 1 );
