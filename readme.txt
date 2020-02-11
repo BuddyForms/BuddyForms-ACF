@@ -3,7 +3,7 @@ Contributors: svenl77, konradS, themekraft, buddyforms, gfirem
 Tags: acf, advanced custom fields, buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, moderation, revision
 Requires at least: 4.0
 Tested up to: 5.3.2
-Stable tag: 1.2.11
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,10 @@ With ACF enabled you build your form fields once and use everywhere. Use ACF for
 <h4>Moderation for your ACF Forms</h4>
 With BuddyForms Moderation you get real post submission moderation to your hands.
 Let your users create and edit posts without creating the ugly 404 "WordPress is struggling" if a published post is set back to draft. ;)
+<br>
+
+<h4>Sync ACF with BuddyPress</h4>
+Now you are able to Sync your ACF field under BuddyForms with BuddyPress xProfile.
 <br>
 
 <H4>Use everywhere</h4>
@@ -91,6 +95,11 @@ You need the BuddyForms plugin installed for the plugin to work.
 2. ** ACF Single Field ** - Use Single fields in Groups
 
 == Changelog ==
+= 1.3.0 - 11 Feb 2020 =
+* Improved the form submission with the version of BuddyForms.
+* Fixed the functionality to store the ACF data into the user meta.
+* Added compatibility with BuddyPress and now is possible to sync from ACF with BuddyPress xProfile.
+
 = 1.2.11 - 28 Jan 2020 =
 * Added support for Registration and Contact Forms.
 
