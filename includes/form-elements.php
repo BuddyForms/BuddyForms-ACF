@@ -172,126 +172,53 @@ add_filter( 'buddyforms_form_element_add_field', 'buddyforms_acf_form_builder_fo
  * @return mixed
  */
 function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
-	global $buddyforms, $nonce;
-
 	$form_slug   = '';
 	$customfield = array();
 	$post_id     = 0;
 
 	extract( $form_args );
 
-	$post_type = $buddyforms[ $form_slug ]['post_type'];
+	if ( ! empty( $customfield ) && $customfield['type'] == 'acf-group' || $customfield['type'] == 'acf-field' ) {
+		global $buddyforms, $nonce;
 
-	if ( ! $post_type ) {
-		return $form;
-	}
+		$post_type = $buddyforms[ $form_slug ]['post_type'];
 
-	if ( ! isset( $customfield['type'] ) ) {
-		return $form;
-	}
+		if ( ! $post_type ) {
+			return $form;
+		}
 
-	acf_form_head();
+		if ( ! isset( $customfield['type'] ) ) {
+			return $form;
+		}
 
-	acf_localize_data( array( 'screen' => 'buddyforms_form_acf-test-requires', 'post_id' => $post_id, 'validation' => true ) );
+		acf_form_head();
 
+		acf_localize_data( array( 'screen' => 'buddyforms_form_acf-test-requires', 'post_id' => $post_id, 'validation' => true ) );
 
-	switch ( $customfield['type'] ) {
-		case 'acf-field':
-			$post_id = $post_id == 0 ? 'new_post' : $post_id;
+		$form_type = '';
+		if ( ! empty( $buddyforms ) && ! empty( $form_slug ) && ! empty( $buddyforms[ $form_slug ] ) ) {
+			$form_type = ! empty( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
+		}
 
-			$tmp = '';
+ 		if ( ! empty( $form_type ) && $form_type === 'registration' ) {
+			$post_id = sprintf( 'user_%s', get_current_user_id() );
+		}
 
-			if ( ! $nonce ) {
-				$tmp .= '<input type="hidden" name="_acfnonce" value="' . wp_create_nonce( 'input' ) . '" />';
-			}
+ 		$post_id = empty($post_id) ? 'new_post' : $post_id;
 
-			if ( ! isset( $customfield['acf_field'] ) ) {
-				return $form;
-			}
+		switch ( $customfield['type'] ) {
+			case 'acf-field':
+				$tmp = '';
 
-			$field = get_field_object( $customfield['acf_field'], $post_id, false );
-
-			// make sure we have a field key. If user switch from free to pro ACF this can happen so we need to catch it...
-			if ( ! isset( $field['key'] ) ) {
-				return $form;
-			}
-
-			$field['name'] = 'fields[' . $field['key'] . ']';
-			ob_start();
-
-			if ( post_type_exists( 'acf-field-group' ) ) {
-				create_field( $field );
-			} else {
-				do_action( 'acf/create_field', $field, $post_id );
-			}
-			$acf_form_field = ob_get_clean();
-
-			if ( empty( $acf_form_field ) ) {
-				continue;
-			}
-
-			$required_class = '';
-
-			$acf_wrapper = array( 'class' => '' );
-			if ( isset( $field['wrapper'] ) ) {
-				$acf_wrapper = $field['wrapper'];
-			}
-
-			// if the field type is not set for any reason, make it a text field. This check is again in tplace for people how switch from pro to free and have some elements with no type
-			$field_type = isset( $field['type'] ) ? $field['type'] : 'text';
-
-			// Create the BuddyForms Form Element Structure
-			if ( post_type_exists( 'acf-field-group' ) ) {
-				// Create the BuddyForms Form Element Structure
-				$tmp .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field bf_field_group acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"><label for=\"%s\">%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], 'acf-' . $field['key'], $field['label'] );
-			} else {
-				// Create the BuddyForms Form Element Structure
-				$tmp .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s %s %s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\"><label for=\"%s\"><label for=\"%s\">%s</label>", $field['key'], $field_type, $field['key'], $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field_type, $field['name'], 'acf-' . $field['key'], $field['label'] );
-			}
-
-			if ( $field['required'] ) {
-				$tmp            = str_replace( '</label>', '&nbsp;<span class="required is-required" aria-required="true">&nbsp;&ast;&nbsp;</span>&nbsp;</label>', $tmp );
-				$acf_form_field = str_replace( 'type=', 'required="required" type=', $acf_form_field );
-			}
-			$acf_form_field = str_replace( 'type=', 'data-form="' . $form_slug . '" type=', $acf_form_field );
-			$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs acf-input acf-input-wrap', $acf_form_field );
-
-			if ( $field['instructions'] ) {
-				$tmp .= '<span class="help-inline">' . $field['instructions'] . '</span>';
-			}
-			$tmp .= $acf_form_field;
-			$tmp .= '</div>';
-
-			$form->addElement( new Element_HTML( $tmp ) );
-
-			break;
-		case 'acf-group':
-
-			$post_id = empty( $post_id ) ? 'new_post' : $post_id;
-
-			// load fields
-			if ( post_type_exists( 'acf-field-group' ) ) {
-				$parent = (int) $customfield['acf_group'];
-				$fields = acf_get_fields( $parent );
-			} else {
-				$fields = apply_filters( 'acf/field_group/get_fields', array(), $customfield['acf_group'] );
-			}
-			if ( ! isset( $fields ) || ! is_array( $fields ) ) {
-				return $form;
-			}
-
-			$tmp = '';
-
-			if ( ! $nonce ) {
-				$tmp .= '<input type="hidden" name="_acfnonce" value="' . wp_create_nonce( 'input' ) . '" />';
-			}
-
-			foreach ( $fields as $field ) {
-				$field_output = '';
-				// set value
-				if ( ! isset( $field['value'] ) ) {
-					$field['value'] = get_field( $field['name'], $post_id, false );
+				if ( ! $nonce ) {
+					$tmp .= '<input type="hidden" name="_acfnonce" value="' . wp_create_nonce( 'input' ) . '" />';
 				}
+
+				if ( ! isset( $customfield['acf_field'] ) ) {
+					return $form;
+				}
+
+				$field = get_field_object( $customfield['acf_field'], $post_id, false );
 
 				// make sure we have a field key. If user switch from free to pro ACF this can happen so we need to catch it...
 				if ( ! isset( $field['key'] ) ) {
@@ -299,8 +226,8 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				}
 
 				$field['name'] = 'fields[' . $field['key'] . ']';
-
 				ob_start();
+
 				if ( post_type_exists( 'acf-field-group' ) ) {
 					create_field( $field );
 				} else {
@@ -325,37 +252,117 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				// Create the BuddyForms Form Element Structure
 				if ( post_type_exists( 'acf-field-group' ) ) {
 					// Create the BuddyForms Form Element Structure
-
-					if ( ! empty( $field['conditional_logic'] ) ) {
-						$rule         = esc_html( json_encode( $field['conditional_logic'] ) );
-						$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\" data-conditions=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $rule, $field['name'], $field['label'] );
-					} else {
-						$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $field['name'], $field['label'] );
-					}
-
+					$tmp .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field bf_field_group acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"><label for=\"%s\">%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], 'acf-' . $field['key'], $field['label'] );
 				} else {
 					// Create the BuddyForms Form Element Structure
-					$field_output .= sprintf( "<div id=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s %s %s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\"><label for=\"%s\"><label for=\"%s\">%s</label>", $field['key'], $field_type, $field['key'], $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field_type, $field['name'], $field['name'], $field['label'] );
+					$tmp .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s %s %s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\"><label for=\"%s\"><label for=\"%s\">%s</label>", $field['key'], $field_type, $field['key'], $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field_type, $field['name'], 'acf-' . $field['key'], $field['label'] );
 				}
 
 				if ( $field['required'] ) {
-					$field_output   = str_replace( '</label>', '&nbsp;<span class="required is-required" aria-required="true">&nbsp;&ast;&nbsp;</span>&nbsp;</label>', $field_output );
+					$tmp            = str_replace( '</label>', '&nbsp;<span class="required is-required" aria-required="true">&nbsp;&ast;&nbsp;</span>&nbsp;</label>', $tmp );
 					$acf_form_field = str_replace( 'type=', 'required="required" type=', $acf_form_field );
 				}
+				$acf_form_field = str_replace( 'type=', 'data-form="' . $form_slug . '" type=', $acf_form_field );
 				$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs acf-input acf-input-wrap', $acf_form_field );
 
 				if ( $field['instructions'] ) {
-					$field_output .= '<span class="help-inline">' . $field['instructions'] . '</span>';
+					$tmp .= '<span class="help-inline">' . $field['instructions'] . '</span>';
+				}
+				$tmp .= $acf_form_field;
+				$tmp .= '</div>';
+
+				$form->addElement( new Element_HTML( $tmp ) );
+
+				break;
+			case 'acf-group':
+				// load fields
+				if ( post_type_exists( 'acf-field-group' ) ) {
+					$parent = (int) $customfield['acf_group'];
+					$fields = acf_get_fields( $parent );
+				} else {
+					$fields = apply_filters( 'acf/field_group/get_fields', array(), $customfield['acf_group'] );
+				}
+				if ( ! isset( $fields ) || ! is_array( $fields ) ) {
+					return $form;
 				}
 
-				$field_output .= $acf_form_field;
-				ob_start();
-				echo $field_output . '</div>';
-				$tmp .= ob_get_clean();
-			}
+				$tmp = '';
 
-			$form->addElement( new Element_HTML( $tmp ) );
-			break;
+				if ( ! $nonce ) {
+					$tmp .= '<input type="hidden" name="_acfnonce" value="' . wp_create_nonce( 'input' ) . '" />';
+				}
+
+				foreach ( $fields as $field ) {
+					$field_output = '';
+					// set value
+					if ( ! isset( $field['value'] ) ) {
+						$field['value'] = get_field( $field['name'], $post_id, false );
+					}
+
+					// make sure we have a field key. If user switch from free to pro ACF this can happen so we need to catch it...
+					if ( ! isset( $field['key'] ) ) {
+						return $form;
+					}
+
+					$field['name'] = 'fields[' . $field['key'] . ']';
+
+					ob_start();
+					if ( post_type_exists( 'acf-field-group' ) ) {
+						create_field( $field );
+					} else {
+						do_action( 'acf/create_field', $field, $post_id );
+					}
+					$acf_form_field = ob_get_clean();
+
+					if ( empty( $acf_form_field ) ) {
+						continue;
+					}
+
+					$required_class = '';
+
+					$acf_wrapper = array( 'class' => '' );
+					if ( isset( $field['wrapper'] ) ) {
+						$acf_wrapper = $field['wrapper'];
+					}
+
+					// if the field type is not set for any reason, make it a text field. This check is again in tplace for people how switch from pro to free and have some elements with no type
+					$field_type = isset( $field['type'] ) ? $field['type'] : 'text';
+
+					// Create the BuddyForms Form Element Structure
+					if ( post_type_exists( 'acf-field-group' ) ) {
+						// Create the BuddyForms Form Element Structure
+
+						if ( ! empty( $field['conditional_logic'] ) ) {
+							$rule         = esc_html( json_encode( $field['conditional_logic'] ) );
+							$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\" data-conditions=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $rule, $field['name'], $field['label'] );
+						} else {
+							$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"  ><label for=\"%s\"  >%s</label>", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $field['name'], $field['label'] );
+						}
+
+					} else {
+						// Create the BuddyForms Form Element Structure
+						$field_output .= sprintf( "<div id=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s %s %s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\"><label for=\"%s\"><label for=\"%s\">%s</label>", $field['key'], $field_type, $field['key'], $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field_type, $field['name'], $field['name'], $field['label'] );
+					}
+
+					if ( $field['required'] ) {
+						$field_output   = str_replace( '</label>', '&nbsp;<span class="required is-required" aria-required="true">&nbsp;&ast;&nbsp;</span>&nbsp;</label>', $field_output );
+						$acf_form_field = str_replace( 'type=', 'required="required" type=', $acf_form_field );
+					}
+					$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs acf-input acf-input-wrap', $acf_form_field );
+
+					if ( $field['instructions'] ) {
+						$field_output .= '<span class="help-inline">' . $field['instructions'] . '</span>';
+					}
+
+					$field_output .= $acf_form_field;
+					ob_start();
+					echo $field_output . '</div>';
+					$tmp .= ob_get_clean();
+				}
+
+				$form->addElement( new Element_HTML( $tmp ) );
+				break;
+		}
 	}
 
 	return $form;
