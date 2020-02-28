@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms Advanced Custom Fields
  * Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
  * Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * License: GPLv2 or later
@@ -34,7 +34,7 @@ class BuddyFormsACF {
 	/**
 	 * @var string
 	 */
-	public static $version = '1.3.1';
+	public static $version = '1.3.2';
 
 	/**
 	 * Initiate the class
@@ -182,58 +182,54 @@ $GLOBALS['BuddyFormsACF'] = new BuddyFormsACF();
 //
 // Check the plugin dependencies
 //
-add_action(
-	'init',
-	function () {
-		// Only Check for requirements in the admin
-		if ( ! is_admin() ) {
-			return;
+add_action( 'init', function () {
+	// Only Check for requirements in the admin
+	if ( ! is_admin() ) {
+		return;
+	}
+	// Require TGM
+	require dirname( __FILE__ ) . '/includes/resources/tgm/class-tgm-plugin-activation.php';
+	// Hook required plugins function to the tgmpa_register action
+	add_action( 'tgmpa_register', function () {
+		$bf_acf_depand = false;
+
+		if ( ! class_exists( 'acf' ) ) {
+			$bf_acf_depand = true;
+			// Create the required plugins array
+			$plugins['advanced-custom-fields'] = array(
+				'name'     => 'Advanced Custom Fields',
+				'slug'     => 'advanced-custom-fields',
+				'required' => true,
+			);
 		}
-		// Require TGM
-		require dirname( __FILE__ ) . '/includes/resources/tgm/class-tgm-plugin-activation.php';
-		// Hook required plugins function to the tgmpa_register action
-		add_action( 'tgmpa_register', function () {
-			$bf_acf_depand = false;
-
-			if ( ! class_exists( 'acf' ) ) {
-				$bf_acf_depand = true;
-				// Create the required plugins array
-				$plugins['advanced-custom-fields'] = array(
-					'name'     => 'Advanced Custom Fields',
-					'slug'     => 'advanced-custom-fields',
-					'required' => true,
-				);
-			}
 
 
-			if ( ! defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
-				$bf_acf_depand         = true;
-				$plugins['buddyforms'] = array(
-					'name'     => 'BuddyForms',
-					'slug'     => 'buddyforms',
-					'required' => true,
-				);
-			}
+		if ( ! defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
+			$bf_acf_depand         = true;
+			$plugins['buddyforms'] = array(
+				'name'     => 'BuddyForms',
+				'slug'     => 'buddyforms',
+				'required' => true,
+			);
+		}
 
 
-			if ( $bf_acf_depand ) {
-				$config = array(
-					'id'           => 'buddyforms-tgmpa',
-					'parent_slug'  => 'plugins.php',
-					'capability'   => 'manage_options',
-					'has_notices'  => true,
-					'dismissable'  => false,
-					'is_automatic' => true,
-				);
-				// Call the tgmpa function to register the required plugins
-				tgmpa( $plugins, $config );
-			}
+		if ( $bf_acf_depand ) {
+			$config = array(
+				'id'           => 'buddyforms-tgmpa',
+				'parent_slug'  => 'plugins.php',
+				'capability'   => 'manage_options',
+				'has_notices'  => true,
+				'dismissable'  => false,
+				'is_automatic' => true,
+			);
+			// Call the tgmpa function to register the required plugins
+			tgmpa( $plugins, $config );
+		}
 
-		} );
-	},
-	1,
-	1
-);
+	} );
+}, 1, 1 );
+
 // Create a helper function for easy SDK access.
 function buddyforms_acf_fs() {
 	global $buddyforms_acf_fs;
@@ -294,11 +290,7 @@ function buddyforms_acf_fs_init() {
 	if ( buddyforms_acf_fs_is_parent_active_and_loaded() ) {
 		// Init Freemius.
 		buddyforms_acf_fs();
-		// Parent is active, add your init code here.
-	} else {
-		// Parent is inactive, add your error handling here.
 	}
-
 }
 
 

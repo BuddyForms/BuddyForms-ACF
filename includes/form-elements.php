@@ -236,7 +236,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 				$acf_form_field = ob_get_clean();
 
 				if ( empty( $acf_form_field ) ) {
-					continue;
+					return $form;
 				}
 
 				$required_class = '';
