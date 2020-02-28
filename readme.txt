@@ -96,7 +96,7 @@ You need the BuddyForms plugin installed for the plugin to work.
 
 == Changelog ==
 = 1.3.2 - 28 Feb 2020 =
-* 
+* Fixed the code correction alert. Thanks to `Alessandro Borges`.
 
 = 1.3.1 - 18 Feb 2020 =
 * Fixed the function to load the values in a ACF Field in a Registration Form.
