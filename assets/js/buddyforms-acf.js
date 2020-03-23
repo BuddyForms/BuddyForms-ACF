@@ -47,8 +47,9 @@ jQuery(document).ready(function () {
                     BuddyFormsHooks.doAction('buddyforms:submit:disable');
                     targetForms.valid();
 
-                    acf.validation.fetch({
+                    acf.validateForm({
                         form: args[0],
+                        reset: true,
                         complete: function (response) {
                             jQuery('.acf-notice').hide();
                             BuddyFormsHooks.doAction('buddyforms:submit:enable');
