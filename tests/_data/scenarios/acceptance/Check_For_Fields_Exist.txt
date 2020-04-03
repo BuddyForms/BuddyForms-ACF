@@ -1,0 +1,17 @@
+I WANT TO CHECK IF BF ACF SINGLE FIELDS ARE PRESENT IN THE FORM
+
+I login "" 
+I check buddy forms is active "" 
+I am going to " 'to edit a form with an ACF Single Field' " 
+I click " 'Form with a single field' " 
+I see " 'Form with a single field' " 
+I see " 'Form Setup' " 
+I expect " 'The ACF field appear in the dropdown of the fields' " 
+I see " 'acf-field' " 
+I go to buddy forms page " " 
+I click " 'Form with a single field' " 
+I see " 'Form with a single field' " 
+I see " 'Form Setup' " 
+I expect " 'The ACF field appear in the dropdown of the fields' " 
+I see " 'acf-group11' "
+
