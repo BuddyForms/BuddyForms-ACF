@@ -1,7 +1,7 @@
 BuddyForms-ACF
 ==========
 
-[![Codeship Status for BuddyForms/BuddyForms-ACF](https://app.codeship.com/projects/018baf00-57ea-0138-e2ee-1e5141835944/status?branch=master)](https://app.codeship.com/projects/391319)
+[![Codeship Status for BuddyForms/BuddyForms-ACF](https://app.codeship.com/projects/018baf00-57ea-0138-e2ee-1e5141835944/status)](https://app.codeship.com/projects/391319)
 
 Integrates the popular Plugin "Advanced Custom Fields" (ACF) with BuddyForms. Use all ACF Fields in your form like native BuddyForms form elements. 
 BuddyForms ACF is an extension of [BuddyForms](https://themekraft.com/buddyforms). 

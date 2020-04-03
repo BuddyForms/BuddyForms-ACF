@@ -46,8 +46,8 @@ modules:
             wait: 0
             window_size: 1024x768
             clear_cookies: false
-            port: 9515
-            host: 127.0.0.1
+            port: '%TEST_CHROME_DRIVER_PORT%'
+            host: '%TEST_CHROME_DRIVER_IP%'
             log_js_errors: true
             capabilities:
                 browserName: chrome
