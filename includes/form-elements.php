@@ -163,6 +163,34 @@ function buddyforms_acf_form_builder_form_elements_enqueue_scripts() {
 
 add_filter( 'buddyforms_form_element_add_field', 'buddyforms_acf_form_builder_form_elements', 1, 5 );
 
+
+function buddyforms_acf_manipulate_labels( &$tmp, &$acf_form_field, $field, $form_slug, $form ) {
+	global $buddyforms;
+	$labels_layout    = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
+	$inline_is_output = false;
+	//Define how look the label or the placeholder
+//	if ( $labels_layout === 'inline' ) {
+//		if ( in_array( $field['type'], array( 'text', 'textarea', 'number', 'email', 'url', 'password', 'wysiwyg', 'message' ) ) ) {
+//			$placeholder = $field['label'];
+//			if ( $field['required'] ) {
+//				$acf_form_field = str_replace( 'type=', 'required="required" type=', $acf_form_field );
+//				$placeholder    .= ' ' . $form->getRequiredPlainSignal();
+//			}
+//			$replace_placeholder = sprintf( "placeholder=\"%s\"", $placeholder );
+//			$acf_form_field      = str_replace( 'type=', $replace_placeholder . ' type=', $acf_form_field );
+//			$inline_is_output    = true;
+//		}
+//	}
+//	if ( ! $inline_is_output ) {
+//		$label_string = sprintf( "<label for=\"_%s\"> %s", esc_attr( 'acf-' . $field['key'] ), $field['label'] );
+//		if ( ! empty( $field['required'] ) ) {
+//			$label_string .= sprintf( "<span class='required is-required' aria-required='true'>%s</span>", $form->getRequiredSignal() );
+//		}
+//		$label_string .= '</label>';
+//		$tmp          .= $label_string;
+//	}
+}
+
 /*
  * Display the new ACF Fields in the frontend form
  *
@@ -200,13 +228,11 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 			$form_type = ! empty( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
 		}
 
- 		if ( ! empty( $form_type ) && $form_type === 'registration' ) {
+		if ( ! empty( $form_type ) && $form_type === 'registration' ) {
 			$post_id = sprintf( 'user_%s', get_current_user_id() );
 		}
 
- 		$post_id = empty($post_id) ? 'new_post' : $post_id;
-
- 		$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
+		$post_id = empty( $post_id ) ? 'new_post' : $post_id;
 
 		switch ( $customfield['type'] ) {
 			case 'acf-field':
@@ -260,25 +286,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 					$tmp .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s %s %s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\">", $field['key'], $field_type, $field['key'], $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field_type );
 				}
 
-				//Define how look the label or the placeholder
-				if ( $labels_layout != 'inline' ) {
-					$label_string = sprintf( "<label for=\"_%s\"> %s", esc_attr( 'acf-' . $field['key'] ), $field['label'] );
-					if ( ! empty( $field['required'] ) ) {
-						$label_string .= sprintf( "<span class='required is-required' aria-required='true'>%s</span>", $form->getRequiredSignal() );
-					}
-					$label_string .= '</label>';
-					$tmp          .= $label_string;
-				}
-
-				if ( $field['required'] ) {
-					$acf_form_field = str_replace( 'type=', 'required="required" type=', $acf_form_field );
-					if ( $labels_layout == 'inline' ) {
-						$placeholder = _x('Select', 'verb', 'acf');
-						$search_placeholder  = sprintf( "data-placeholder=\"%s\"", $placeholder );
-						$replace_placeholder = sprintf( "data-placeholder=\"%s\"", $placeholder . ' ' . $form->getRequiredPlainSignal() );
-						$acf_form_field      = str_replace( $search_placeholder, $replace_placeholder, $acf_form_field );
-					}
-				}
+				buddyforms_acf_manipulate_labels( $tmp, $acf_form_field, $field, $form_slug, $form );
 
 				$acf_form_field = str_replace( 'type=', 'data-form="' . $form_slug . '" type=', $acf_form_field );
 				$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs acf-input acf-input-wrap', $acf_form_field );
@@ -352,35 +360,17 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 						if ( ! empty( $field['conditional_logic'] ) ) {
 							$rule         = esc_html( json_encode( $field['conditional_logic'] ) );
-							$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\" data-conditions=\"%s\"  >", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $rule );
+							$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field bf_field_group acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\" data-conditions=\"%s\"  >", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'], $rule );
 						} else {
-							$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"  >", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'] );
+							$field_output .= sprintf( "<div data-target=\"acf-%s\" class=\"bf_field bf_field_group acf-field acf-field-%s acf-%s %s %s\" data-name=\"%s\" data-key=\"%s\" data-type=\"%s\"  >", $field['key'], str_replace( "_", "-", $field_type ), str_replace( "_", "-", $field['key'] ), $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field['type'] );
 						}
 
 					} else {
 						// Create the BuddyForms Form Element Structure
-						$field_output .= sprintf( "<div id=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s %s %s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\">", $field['key'], $field_type, $field['key'], $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field_type);
+						$field_output .= sprintf( "<div id=\"acf-%s\" class=\"bf_field_group field field_type-%s field_key-%s %s %s\" data-field_name=\"%s\" data-field_key=\"%s\" data-field_type=\"%s\">", $field['key'], $field_type, $field['key'], $acf_wrapper['class'], $required_class, $field['name'], $field['key'], $field_type );
 					}
 
-					//Define how look the label or the placeholder
-					if ( $labels_layout != 'inline' ) {
-						$label_string = sprintf( "<label for=\"_%s\"> %s", esc_attr( 'acf-' . $field['key'] ), $field['label'] );
-						if ( ! empty( $field['required'] ) ) {
-							$label_string .= sprintf( "<span class='required is-required' aria-required='true'>%s</span>", $form->getRequiredSignal() );
-						}
-						$label_string .= '</label>';
-						$tmp          .= $label_string;
-					}
-
-					if ( $field['required'] ) {
-						$acf_form_field = str_replace( 'type=', 'required="required" type=', $acf_form_field );
-						if ( $labels_layout == 'inline' ) {
-							$placeholder = _x('Select', 'verb', 'acf');
-							$search_placeholder  = sprintf( "data-placeholder=\"%s\"", $placeholder );
-							$replace_placeholder = sprintf( "data-placeholder=\"%s\"", $placeholder . ' ' . $form->getRequiredPlainSignal() );
-							$acf_form_field      = str_replace( $search_placeholder, $replace_placeholder, $acf_form_field );
-						}
-					}
+					buddyforms_acf_manipulate_labels( $field_output, $acf_form_field, $field, $form_slug, $form );
 
 					$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs acf-input acf-input-wrap', $acf_form_field );
 

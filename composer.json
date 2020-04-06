@@ -41,6 +41,7 @@
     "beta-release": "sh .tk/full-deploy.sh loader 410 false beta",
     "full-release": "sh .tk/full-deploy.sh loader 410 false released",
     "update-freemius": "sh .tk/update-freemius.sh ../wordpress-sdk includes/resources/freemius",
-    "codecept": "codecept"
+    "codecept": "vendor/bin/codecept",
+    "chromedriver": "sh .tk/chromedriver.sh"
   }
 }
