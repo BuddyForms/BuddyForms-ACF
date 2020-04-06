@@ -169,26 +169,26 @@ function buddyforms_acf_manipulate_labels( &$tmp, &$acf_form_field, $field, $for
 	$labels_layout    = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 	$inline_is_output = false;
 	//Define how look the label or the placeholder
-//	if ( $labels_layout === 'inline' ) {
-//		if ( in_array( $field['type'], array( 'text', 'textarea', 'number', 'email', 'url', 'password', 'wysiwyg', 'message' ) ) ) {
-//			$placeholder = $field['label'];
-//			if ( $field['required'] ) {
-//				$acf_form_field = str_replace( 'type=', 'required="required" type=', $acf_form_field );
-//				$placeholder    .= ' ' . $form->getRequiredPlainSignal();
-//			}
-//			$replace_placeholder = sprintf( "placeholder=\"%s\"", $placeholder );
-//			$acf_form_field      = str_replace( 'type=', $replace_placeholder . ' type=', $acf_form_field );
-//			$inline_is_output    = true;
-//		}
-//	}
-//	if ( ! $inline_is_output ) {
-//		$label_string = sprintf( "<label for=\"_%s\"> %s", esc_attr( 'acf-' . $field['key'] ), $field['label'] );
-//		if ( ! empty( $field['required'] ) ) {
-//			$label_string .= sprintf( "<span class='required is-required' aria-required='true'>%s</span>", $form->getRequiredSignal() );
-//		}
-//		$label_string .= '</label>';
-//		$tmp          .= $label_string;
-//	}
+	if ( $labels_layout === 'inline' ) {
+		if ( in_array( $field['type'], array( 'text', 'textarea', 'number', 'email', 'url', 'password', 'wysiwyg', 'message' ) ) ) {
+			$placeholder = $field['label'];
+			if ( $field['required'] ) {
+				$acf_form_field = str_replace( 'type=', 'required="required" type=', $acf_form_field );
+				$placeholder    .= ' ' . $form->getRequiredPlainSignal();
+			}
+			$replace_placeholder = sprintf( "placeholder=\"%s\"", $placeholder );
+			$acf_form_field      = str_replace( 'type=', $replace_placeholder . ' type=', $acf_form_field );
+			$inline_is_output    = true;
+		}
+	}
+	if ( ! $inline_is_output ) {
+		$label_string = sprintf( "<label for=\"_%s\"> %s", esc_attr( 'acf-' . $field['key'] ), $field['label'] );
+		if ( ! empty( $field['required'] ) ) {
+			$label_string .= sprintf( "<span class='required is-required' aria-required='true'>%s</span>", $form->getRequiredSignal() );
+		}
+		$label_string .= '</label>';
+		$tmp          .= $label_string;
+	}
 }
 
 /*
