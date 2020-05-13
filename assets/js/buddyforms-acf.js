@@ -1,5 +1,5 @@
 jQuery(document).ready(function () {
-    if (BuddyFormsHooks && buddyformsGlobal) {
+    if (BuddyFormsHooks && buddyformsGlobal && acf) {
         var containsAcfFields = jQuery('.acf-field');
         if (containsAcfFields && containsAcfFields.length > 0) {
 
