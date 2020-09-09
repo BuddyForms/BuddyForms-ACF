@@ -182,7 +182,7 @@ function buddyforms_acf_manipulate_labels( &$tmp, &$acf_form_field, $field, $for
 		}
 	}
 	if ( ! $inline_is_output ) {
-		$label_string = sprintf( "<label for=\"_%s\"> %s", esc_attr( 'acf-' . $field['key'] ), $field['label'] );
+		$label_string = sprintf( "<label class='acf-label' for=\"_%s\"> %s", esc_attr( 'acf-' . $field['key'] ), $field['label'] );
 		if ( ! empty( $field['required'] ) ) {
 			$label_string .= sprintf( "<span class='required is-required' aria-required='true'>%s</span>", $form->getRequiredSignal() );
 		}
@@ -377,6 +377,10 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 					if ( empty( $acf_form_field ) ) {
 						continue;
 					}
+                    if (  $field['type'] == "accordion") {
+
+                        $acf_form_field = str_replace( 'acf-fields', 'acf-fields acf-accordion-content ', $acf_form_field );
+                    }
 
 					$required_class = '';
 
@@ -406,7 +410,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 					buddyforms_acf_manipulate_labels( $field_output, $acf_form_field, $field, $form_slug, $form );
 
-					$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs acf-input acf-input-wrap', $acf_form_field );
+					$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs acf-input acf-input-wrap ', $acf_form_field );
 
 					if ( $field['instructions'] ) {
 						$field_output .= '<span class="help-inline">' . $field['instructions'] . '</span>';
