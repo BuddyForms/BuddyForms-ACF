@@ -288,7 +288,41 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 				buddyforms_acf_manipulate_labels( $tmp, $acf_form_field, $field, $form_slug, $form );
 
-				$acf_form_field = str_replace( 'type=', 'data-form="' . $form_slug . '" type=', $acf_form_field );
+				// Not sure what this is for, but it causes data fields in repeaters fail
+				// $acf_form_field = str_replace( ' type=', 'data-form="' . $form_slug . '" type=', $acf_form_field );
+				
+				// Ensure data-types are kept where appropriate so rich fields (such as date_pickers, selct, etc) have their expected behaviour
+				$acf_form_field = str_replace(' type="text"', ' type="text" data-type="text"', $acf_form_field);
+				$acf_form_field = str_replace(' type="textarea"', ' type="textarea" data-type="textarea"', $acf_form_field);
+				$acf_form_field = str_replace(' type="number"', ' type="number" data-type="number"', $acf_form_field);
+				$acf_form_field = str_replace(' type="range"', ' type="range" data-type="range"', $acf_form_field);
+				$acf_form_field = str_replace(' type="email"', ' type="email" data-type="email"', $acf_form_field);
+				$acf_form_field = str_replace(' type="url"', ' type="url" data-type="url"', $acf_form_field);
+				$acf_form_field = str_replace(' type="password"', ' type="password" data-type="password"', $acf_form_field);
+				$acf_form_field = str_replace(' type="image"', ' type="image" data-type="image"', $acf_form_field);
+				$acf_form_field = str_replace(' type="file"', ' type="file" data-type="file"', $acf_form_field);
+				$acf_form_field = str_replace(' type="wysiwyg"', ' type="wysiwyg" data-type="wysiwyg"', $acf_form_field);
+				$acf_form_field = str_replace(' type="oembed"', ' type="oembed" data-type="oembed"', $acf_form_field);
+				$acf_form_field = str_replace(' type="select"', ' type="select" data-type="select"', $acf_form_field);
+				$acf_form_field = str_replace(' type="checkbox"', ' type="checkbox" data-type="checkbox"', $acf_form_field);
+				$acf_form_field = str_replace(' type="button"', ' type="button" data-type="button"', $acf_form_field);
+				$acf_form_field = str_replace(' type="true_false"', ' type="true_false" data-type="true_false"', $acf_form_field);
+				$acf_form_field = str_replace(' type="link"', ' type="link" data-type="link"', $acf_form_field);
+				$acf_form_field = str_replace(' type="post_object"', ' type="post_object" data-type="post_object"', $acf_form_field);
+				$acf_form_field = str_replace(' type="page_link"', ' type="page_link" data-type="page_link"', $acf_form_field);
+				$acf_form_field = str_replace(' type="relationship"', ' type="relationship" data-type="relationship"', $acf_form_field);
+				$acf_form_field = str_replace(' type="taxonomy"', ' type="taxonomy" data-type="taxonomy"', $acf_form_field);
+				$acf_form_field = str_replace(' type="user"', ' type="user" data-type="user"', $acf_form_field);
+				$acf_form_field = str_replace(' type="google"', ' type="google" data-type="google"', $acf_form_field);
+				$acf_form_field = str_replace(' type="date_picker"', ' type="date_picker" data-type="date_picker"', $acf_form_field);
+				$acf_form_field = str_replace(' type="date_time_picker"', ' type="date_time_picker" data-type="date_time_picker"', $acf_form_field);
+				$acf_form_field = str_replace(' type="time_picker"', ' type="time_picker" data-type="time_picker"', $acf_form_field);
+				$acf_form_field = str_replace(' type="color_picker"', ' type="color_picker" data-type="color_picker"', $acf_form_field);
+				$acf_form_field = str_replace(' type="message"', ' type="message" data-type="message"', $acf_form_field);
+				$acf_form_field = str_replace(' type="accordion"', ' type="accordion" data-type="accordion"', $acf_form_field);
+				$acf_form_field = str_replace(' type="tab"', ' type="tab" data-type="tab"', $acf_form_field);
+				$acf_form_field = str_replace(' type="group"', ' type="group" data-type="group"', $acf_form_field);
+				
 				$acf_form_field = str_replace( 'acf-input-wrap', 'bf_inputs acf-input acf-input-wrap', $acf_form_field );
 
 				if ( $field['instructions'] ) {
