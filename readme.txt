@@ -2,8 +2,8 @@
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem
 Tags: acf, advanced custom fields, buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, moderation, revision
 Requires at least: 4.0
-Tested up to: 5.7
-Stable tag: 1.3.5
+Tested up to: 5.8
+Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,9 @@ You need the BuddyForms plugin installed for the plugin to work.
 2. ** ACF Single Field ** - Use Single fields in Groups
 
 == Changelog ==
+= 1.3.6 - 27 Sep 2021 =
+* Tested up with WordPress 5.8
+
 = 1.3.5 - 8 March 2021 =
 * Tested up with WordPress 5.7
 
