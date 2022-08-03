@@ -263,6 +263,7 @@ function buddyforms_acf_fs() {
 				'support'    => false,
 			),
 			'is_live'        => true,
+			'bundle_license_auto_activation' => true,
 		) );
 	}
 
