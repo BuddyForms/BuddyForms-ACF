@@ -170,7 +170,6 @@ class BuddyFormsACF {
 					$min     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 					wp_enqueue_script( 'acf-pro-field-group', acf_get_url( "/assets/build/js/acf-field-group{$min}.js" ), array( 'acf-field-group' ), $version );
 				}
-
 			}
 		}
 
@@ -182,53 +181,59 @@ $GLOBALS['BuddyFormsACF'] = new BuddyFormsACF();
 //
 // Check the plugin dependencies
 //
-add_action( 'init', function () {
-	// Only Check for requirements in the admin
-	if ( ! is_admin() ) {
-		return;
-	}
-	// Require TGM
-	require dirname( __FILE__ ) . '/includes/resources/tgm/class-tgm-plugin-activation.php';
-	// Hook required plugins function to the tgmpa_register action
-	add_action( 'tgmpa_register', function () {
-		$bf_acf_depand = false;
-
-		if ( ! class_exists( 'acf' ) ) {
-			$bf_acf_depand = true;
-			// Create the required plugins array
-			$plugins['advanced-custom-fields'] = array(
-				'name'     => 'Advanced Custom Fields',
-				'slug'     => 'advanced-custom-fields',
-				'required' => true,
-			);
+add_action(
+	'init',
+	function () {
+		// Only Check for requirements in the admin
+		if ( ! is_admin() ) {
+			return;
 		}
+		// Require TGM
+		require dirname( __FILE__ ) . '/includes/resources/tgm/class-tgm-plugin-activation.php';
+		// Hook required plugins function to the tgmpa_register action
+		add_action(
+			'tgmpa_register',
+			function () {
+				$bf_acf_depand = false;
 
+				if ( ! class_exists( 'acf' ) ) {
+					$bf_acf_depand = true;
+					// Create the required plugins array
+					$plugins['advanced-custom-fields'] = array(
+						'name'     => 'Advanced Custom Fields',
+						'slug'     => 'advanced-custom-fields',
+						'required' => true,
+					);
+				}
 
-		if ( ! defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
-			$bf_acf_depand         = true;
-			$plugins['buddyforms'] = array(
-				'name'     => 'BuddyForms',
-				'slug'     => 'buddyforms',
-				'required' => true,
-			);
-		}
+				if ( ! defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
+					$bf_acf_depand         = true;
+					$plugins['buddyforms'] = array(
+						'name'     => 'BuddyForms',
+						'slug'     => 'buddyforms',
+						'required' => true,
+					);
+				}
 
+				if ( $bf_acf_depand ) {
+					$config = array(
+						'id'           => 'buddyforms-tgmpa',
+						'parent_slug'  => 'plugins.php',
+						'capability'   => 'manage_options',
+						'has_notices'  => true,
+						'dismissable'  => false,
+						'is_automatic' => true,
+					);
+					// Call the tgmpa function to register the required plugins
+					tgmpa( $plugins, $config );
+				}
 
-		if ( $bf_acf_depand ) {
-			$config = array(
-				'id'           => 'buddyforms-tgmpa',
-				'parent_slug'  => 'plugins.php',
-				'capability'   => 'manage_options',
-				'has_notices'  => true,
-				'dismissable'  => false,
-				'is_automatic' => true,
-			);
-			// Call the tgmpa function to register the required plugins
-			tgmpa( $plugins, $config );
-		}
-
-	} );
-}, 1, 1 );
+			}
+		);
+	},
+	1,
+	1
+);
 
 // Create a helper function for easy SDK access.
 function buddyforms_acf_fs() {
@@ -244,27 +249,29 @@ function buddyforms_acf_fs() {
 			require_once dirname( dirname( __FILE__ ) ) . '/buddyforms-premium/includes/resources/freemius/start.php';
 		}
 
-		$buddyforms_acf_fs = fs_dynamic_init( array(
-			'id'             => '410',
-			'slug'           => 'buddyforms-acf',
-			'type'           => 'plugin',
-			'public_key'     => 'pk_08c84f0b4787a8364f3bd9aa1119f',
-			'is_premium'     => false,
-			'has_paid_plans' => false,
-			'parent'         => array(
-				'id'         => '391',
-				'slug'       => 'buddyforms',
-				'public_key' => 'pk_dea3d8c1c831caf06cfea10c7114c',
-				'name'       => 'BuddyForms',
-			),
-			'menu'           => array(
-				'slug'       => 'edit.php?post_type=buddyforms',
-				'first-path' => 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen',
-				'support'    => false,
-			),
-			'is_live'        => true,
-			'bundle_license_auto_activation' => true,
-		) );
+		$buddyforms_acf_fs = fs_dynamic_init(
+			array(
+				'id'                             => '410',
+				'slug'                           => 'buddyforms-acf',
+				'type'                           => 'plugin',
+				'public_key'                     => 'pk_08c84f0b4787a8364f3bd9aa1119f',
+				'is_premium'                     => false,
+				'has_paid_plans'                 => false,
+				'parent'                         => array(
+					'id'         => '391',
+					'slug'       => 'buddyforms',
+					'public_key' => 'pk_dea3d8c1c831caf06cfea10c7114c',
+					'name'       => 'BuddyForms',
+				),
+				'menu'                           => array(
+					'slug'       => 'edit.php?post_type=buddyforms',
+					'first-path' => 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen',
+					'support'    => false,
+				),
+				'is_live'                        => true,
+				'bundle_license_auto_activation' => true,
+			)
+		);
 	}
 
 	return $buddyforms_acf_fs;
@@ -307,5 +314,4 @@ if ( buddyforms_acf_fs_is_parent_active_and_loaded() ) {
 		// Even though the parent is not activated, execute add-on for activation / uninstall hooks.
 		buddyforms_acf_fs_init();
 	}
-
 }
