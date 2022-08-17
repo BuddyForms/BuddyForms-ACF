@@ -440,7 +440,7 @@ function buddyforms_acf_frontend_form_elements( $form, $form_args ) {
 
 					$field_output .= $acf_form_field;
 					ob_start();
-					echo wp_kses_post( $field_output ) . '</div>';
+					echo $field_output . '</div>';
 					$tmp .= ob_get_clean();
 				}
 
