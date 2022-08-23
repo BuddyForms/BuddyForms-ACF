@@ -490,7 +490,7 @@ function buddyforms_acf_update_post_meta( $customfield, $post_id ) {
 				if ( $fields ) {
 					foreach ( $fields as $field ) {
 						if ( isset( $_POST['acf'][ $field['key'] ] ) ) {
-							update_field( $field['key'], wp_kses_post( wp_unslash( $_POST['acf'][ $field['key'] ] ) ), $post_id );
+							update_field( $field['key'], $_POST['acf'][ $field['key'] ], $post_id );
 						}
 					}
 				}
@@ -499,7 +499,7 @@ function buddyforms_acf_update_post_meta( $customfield, $post_id ) {
 				if ( $fields ) {
 					foreach ( $fields as $field ) {
 						if ( isset( $_POST[ $field['name'] ] ) ) {
-							update_field( $field['key'], wp_kses_post( wp_unslash( $_POST[ $field['name'] ] ) ), $post_id );
+							update_field( $field['key'], $_POST[ $field['name'] ], $post_id );
 						}
 					}
 				}
@@ -509,11 +509,11 @@ function buddyforms_acf_update_post_meta( $customfield, $post_id ) {
 		if ( $customfield['type'] == 'acf-field' ) {
 			if ( post_type_exists( 'acf-field-group' ) ) {
 				if ( isset( $_POST['acf'][ $customfield['acf_field'] ] ) ) {
-					update_field( $customfield['acf_field'], wp_kses_post( wp_unslash( $_POST['acf'][ $customfield['acf_field'] ] ) ), $post_id );
+					update_field( $customfield['acf_field'], $_POST['acf'][ $customfield['acf_field'] ], $post_id );
 				}
 			} else {
 				if ( isset( $_POST['fields'][ $customfield['acf_field'] ] ) ) {
-					update_field( $customfield['acf_field'], wp_kses_post( wp_unslash( $_POST['fields'][ $customfield['acf_field'] ] ) ), $post_id );
+					update_field( $customfield['acf_field'], $_POST['fields'][ $customfield['acf_field'] ], $post_id );
 				}
 			}
 		}
@@ -528,11 +528,11 @@ function buddyforms_acf_get_fields() {
 	$fields = array();
 	if ( post_type_exists( 'acf-field-group' ) ) {
 		if ( ! empty( $_POST['fields_group_id'] ) ) {
-			$fields = acf_get_fields( wp_kses_post( wp_unslash( $_POST['fields_group_id'] ) ) );
+			$fields = acf_get_fields( $_POST['fields_group_id'] );
 		}
 	} else {
 		if ( ! empty( $_POST['fields_group_id'] ) ) {
-			$fields = apply_filters( 'acf/field_group/get_fields', array(), wp_kses_post( wp_unslash( $_POST['fields_group_id'] ) ) );
+			$fields = apply_filters( 'acf/field_group/get_fields', array(), $_POST['fields_group_id'] );
 		}
 	}
 
@@ -568,9 +568,9 @@ function buddyforms_acf_process_submission_end( $args ) {
 						if ( $field['type'] == 'acf-group' || $field['type'] == 'acf-field' ) {
 							if ( $field['type'] == 'acf-field' ) {
 								if ( post_type_exists( 'acf-field-group' ) ) {
-									$field_value = isset( $_POST['acf'][ $field['acf_field'] ] ) ? wp_kses_post( wp_unslash( $_POST['acf'][ $field['acf_field'] ] ) ) : '';
+									$field_value = isset( $_POST['acf'][ $field['acf_field'] ] ) ? $_POST['acf'][ $field['acf_field'] ] : '';
 								} else {
-									$field_value = isset( $_POST['fields'][ $field['acf_field'] ] ) ? wp_kses_post( wp_unslash( $_POST['fields'][ $field['acf_field'] ] ) ) : '';
+									$field_value = isset( $_POST['fields'][ $field['acf_field'] ] ) ? $_POST['fields'][ $field['acf_field'] ] : '';
 								}
 								if ( isset( $field_value ) ) {
 									xprofile_set_field_data( $field['mapped_xprofile_field'], $user_id, $field_value );
@@ -585,7 +585,7 @@ function buddyforms_acf_process_submission_end( $args ) {
 									if ( $fields ) {
 										foreach ( $fields as $acf_field ) {
 											if ( isset( $_POST['acf'][ $acf_field['key'] ] ) ) {
-												xprofile_set_field_data( $acf_field['mapped_xprofile_field'], $user_id, wp_kses_post( wp_unslash( $_POST['acf'][ $acf_field['key'] ] ) ) );
+												xprofile_set_field_data( $acf_field['mapped_xprofile_field'], $user_id, $_POST['acf'][ $acf_field['key'] ] );
 											}
 										}
 									}
@@ -594,7 +594,7 @@ function buddyforms_acf_process_submission_end( $args ) {
 									if ( $fields ) {
 										foreach ( $fields as $acf_field ) {
 											if ( isset( $_POST[ $acf_field['name'] ] ) ) {
-												xprofile_set_field_data( $acf_field['mapped_xprofile_field'], $user_id, wp_kses_post( wp_unslash( $_POST[ $acf_field['name'] ] ) ) );
+												xprofile_set_field_data( $acf_field['mapped_xprofile_field'], $user_id, $_POST[ $acf_field['name'] ] );
 											}
 										}
 									}
