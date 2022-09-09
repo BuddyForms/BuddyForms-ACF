@@ -114,7 +114,7 @@ function buddyforms_acf_form_builder_form_elements( $form_fields, $form_slug, $f
 			}
 			$form_fields['general']['name'] = new Element_Hidden( 'buddyforms_options[form_fields][' . $field_id . '][name]', $name );
 
-			$form_fields['general']['slug']  = new Element_Hidden( 'buddyforms_options[form_fields][' . $field_id . '][slug]', 'acf_field_key' );
+			$form_fields['general']['slug']  = new Element_Hidden( 'buddyforms_options[form_fields][' . $field_id . '][slug]', 'acf_' . $acf_field );
 			$form_fields['general']['type']  = new Element_Hidden( 'buddyforms_options[form_fields][' . $field_id . '][type]', $field_type );
 			$form_fields['general']['order'] = new Element_Hidden( 'buddyforms_options[form_fields][' . $field_id . '][order]', $field_position, array( 'id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order' ) );
 			break;
