@@ -92,7 +92,7 @@ Yes, you can create Simple Contact Forms or Complex Contact Forms with any ACF F
 = Can I Create advanced Custom Fields Post Form =
 Yes, you can create post forms for user submissions from the front end for any post type
 
-= Can I use Advanced Custom Fields Frontend Moderation=
+= Can I use Advanced Custom Fields Frontend Moderation =
 Yes, you can use the Moderation Extension and create Moderation queries in the frontend for your moderators to moderate advanced custom fields frontend forms submissions and comunicate with the submitter if needed during the review process.
 
 
