@@ -58,7 +58,6 @@ You can use any ACF extension with BuddyForms. BuddyForms ACF should be fully co
 
 ### Use ACF to create a BuddyPress Component
 Create a BuddyPress Members Component or extend your groups with ACF fields!
-<br>
 
 ### Use ACF for all your form fields
 With ACF enabled you build your form fields once and use everywhere. Use ACF for all form elements needed and just integrate the ACF field groups or single fields in your BuddyForms forms. You can use any ACF Field or Custom ACF Fields with BuddyForms and combine them with BuddyForms Fields and Extensions.
