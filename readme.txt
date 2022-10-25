@@ -30,10 +30,10 @@ Use any ACF Field or Field Group and use it in a BuddyForms Post Form as form El
 List Submissions made with a ACF Form in the frontendn and enable the author to manage there submissions based on there user rights. Every form comes witha permission section to define create - edit and delete capabillities. 
 
 ### Display Formdata vs Display ACF Fields
-You can use any ACF field in BuddyForms to display data in themes and pages with gutenberg or pagebuilders. On top, ACF is supported in all major page builders so you can access any data just as used to in your theme mor pagebuilder. Anyway, BuddyForms coems with some hzandy functionallety to display form any data submitted by a form. read more about Display form submission data in the documentation
+You can use any ACF field in BuddyForms to display data in themes and pages with gutenberg or pagebuilders. On top, ACF is supported in all major page builders so you can access any data just as used to in your theme mor pagebuilder. Anyway, BuddyForms coems with some hzandy functionallety to display form any data submitted by a form.
 
 ### ACF Profile Forms
-Create Author and Profile Pages for your Member with ACf and let your users change there Profile information with ja handy profile form to manage all the data from one place. 
+Create Author and Profile Pages for your Member with ACf and let your users change there Profile information with a handy profile form to manage all the data from one place. 
 
 ### ACF BuddyPress - ACF BuddyBoss
 Use Acf with BuddyPress and BuddyForms Members to create a new Profile tab from a field or field group
@@ -42,7 +42,7 @@ Use Acf with BuddyPress and BuddyForms Members to create a new Profile tab from 
 Use Acf with BuddyPress and BuddyForms Ultimate Members to create a new Profile tab from a acf field or acf field group
 
 ### ACF Guest Post
-Create all lthe relevant views for guest posts with ACF and BuddyForms Moderation and create a content creation process that make guest submissions with ACF possible. Read more about Guest post management here.
+Create all lthe relevant views for guest posts with ACF and BuddyForms Moderation and create a content creation process that make guest submissions with ACF possible.
 
 ### ACF User Generated Content
 Create ACF Forms to collect User Generated Content of any kind with ease. This can be a file upload or any kind of content type. Enable your members to access there data data. 
@@ -51,7 +51,7 @@ Create ACF Forms to collect User Generated Content of any kind with ease. This c
 Create Payed ACF Submissions and let your users pay to use a ACF Form or edit exiting content with the BuddyForms pay for Submission Extension. 
 
 ### Moderation Controle
-With BuddyForms you get a tons of features to make sure your Content ios valide and stay live while somone is editing a post. BuddyForms cover all the needs of a content creatin review process. We are working on new features to validate tehj qualety of your content all the time. Find out more about BuddyForms Moderation and Notification System and in teh Documentation
+With BuddyForms you get a tons of features to make sure your Content ios valide and stay live while somone is editing a post. BuddyForms cover all the needs of a content creatin review process. We are working on new features to validate tehj qualety of your content all the time. Find out more about BuddyForms Moderation and Notification System and in the Documentation
 
 ### Advanced Custom Fields Extension
 You can use any ACF extension with BuddyForms. BuddyForms ACF should be fully comatible 
@@ -71,14 +71,13 @@ Now you are able to Sync your ACF field under BuddyForms with BuddyPress xProfil
 
 All code is neat, clean and well documented (inline as well as in the documentation).
 
-The BuddyForms Documentation comes with many how-to’s!
+The BuddyForms Documentation comes with many how-to’s! [https://docs.buddyforms.com/](https://docs.buddyforms.com/)
 
-If you still get stuck somewhere, our support gets you back on the right track.
-You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard!
+If you still get stuck somewhere, our support gets you back on the right track. You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard!
 
 == Installation ==
 
-You can download and install the plugin using the built-in WordPress plugin installer.
+Download and install the plugin using the built-in WordPress plugin installer.
 
 If you download BuddyForms manually, make sure it is uploaded to "/wp-content/plugins/".
 
