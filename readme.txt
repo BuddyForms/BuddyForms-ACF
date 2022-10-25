@@ -48,7 +48,7 @@ Create all lthe relevant views for guest posts with ACF and BuddyForms Moderatio
 Create ACF Forms to collect User Generated Content of any kind with ease. This can be a file upload or any kind of content type. Enable your members to access there data data. 
 
 ### ACF Payed Forms 
-Create Payed ACF Submissions and let your users pay to use a ACF Form or edit exiting content. 
+Create Payed ACF Submissions and let your users pay to use a ACF Form or edit exiting content with the BuddyForms pay for Submission Extension. 
 
 ### Moderation Controle
 With BuddyForms you get a tons of features to make sure your Content ios valide and stay live while somone is editing a post. BuddyForms cover all the needs of a content creatin review process. We are working on new features to validate tehj qualety of your content all the time. Find out more about BuddyForms Moderation and Notification System and in teh Documentation
@@ -60,18 +60,10 @@ You can use any ACF extension with BuddyForms. BuddyForms ACF should be fully co
 Create a BuddyPress Members Component or extend your groups with ACF fields!
 
 ### Use ACF for all your form fields
-With ACF enabled you build your form fields once and use everywhere. Use ACF for all form elements needed and just integrate the ACF field groups or single fields in your BuddyForms forms. You can use any ACF Field or Custom ACF Fields with BuddyForms and combine them with BuddyForms Fields and Extensions.
-
-### Moderation for your ACF Forms
-With BuddyForms Moderation you get real post submission moderation to your hands.
-Let your users create and edit posts without creating the ugly 404 "WordPress is struggling" if a published post is set back to draft. ;)
+With ACF enabled you build your form fields once and use everywhere. Use ACF for all form elements needed and just integrate the ACF field groups or single fields in your BuddyForms forms. You can use any ACF Field or Custom ACF Fields with BuddyForms and combine them with BuddyForms Fields and Extensions. If you use ACF, no need to use buddyForms form elements. just use BuddyForms for the frontend CMS to build the Forntend Post Forms and Submission lists to manage post submissions from the frontend.
 
 ### Sync ACF with BuddyPress
 Now you are able to Sync your ACF field under BuddyForms with BuddyPress xProfile.
-
-### Use everywhere
-With BuddyForms and ACF together you build your field sets once and use them everywhere.
-In the backend edit screen or in the front end via shortcodes or integrated with BuddyPress or any other BuddyForms supported plugin.
 
 == Documentation & Support ==
 
