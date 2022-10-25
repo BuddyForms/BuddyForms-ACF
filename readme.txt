@@ -86,8 +86,15 @@ Activate the plugin in the "Plugins" admin panel using the "Activate" link. If y
 
 == Frequently Asked Questions ==
 
-You need the BuddyForms plugin installed for the plugin to work.
-<a href="http://buddyforms.com" target="_blank">Get BuddyForms now!</a>
+= Can I Create Advanced Custom Fields Forms =
+Yes, you can create Simple Contact Forms or Complex Contact Forms with any ACF Field Type
+
+= Can I Create advanced Custom Fields Post Form =
+Yes, you can create post forms for user submissions from the front end for any post type
+
+= Can I use Advanced Custom Fields Frontend Moderation=
+Yes, you can use the Moderation Extension and create Moderation queries in the frontend for your moderators to moderate advanced custom fields frontend forms submissions and comunicate with the submitter if needed during the review process.
+
 
 == Screenshots ==
 
