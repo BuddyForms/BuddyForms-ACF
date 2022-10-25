@@ -1,16 +1,18 @@
-=== BuddyForms ACF ===
+=== Advanced Custon Foields Frontend Forms - ACF Forms - ACF Post Form - ACF Registration Form - ACF Content Forms with full Moderation===
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem
-Tags: acf, advanced custom fields, buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, moderation, revision
+Tags: acf, advanced custom fields, acf form, acf registration, acf post form
 Requires at least: 4.0
 Tested up to: 6.0.2
 Stable tag: 1.3.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Integrates the popular Plugin "Advanced Custom Fields" (ACF) with BuddyForms. Use all ACF Fields in your form like native BuddyForms form elements.
+ACF Forms for any Form Type. Use ACF Forms anywhere. ACF Frontend Forms to create edit and delete any kind of data. ACF Form Submissions with full moderation control. ACF Registration Forms and ACF Profile Forms build with ease!
 
 == Description ==
 
+Integrates the popular Plugin "Advanced Custom Fields" (ACF) with BuddyForms. Use all ACF Fields in your form like native BuddyForms form elements.
+Works with any BuddyPress BuddyBoss, Ultimate Member and 
 With the BuddyForms ACF Extension you can use Advanced Custom Fields with BuddyForms.
 <br>
 
