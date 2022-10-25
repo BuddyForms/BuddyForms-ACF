@@ -29,7 +29,7 @@ Use any ACF Field or Field Group and use it in a BuddyForms Post Form as form El
 ### List Submissions
 List Submissions made with a ACF Form in the frontendn and enable the author to manage there submissions based on there user rights. Every form comes witha permission section to define create - edit and delete capabillities. 
 
-### Display Formdata vs display ACF Fields
+### Display Formdata vs Display ACF Fields
 You can use any ACF field in BuddyForms to display data in themes and pages with gutenberg or pagebuilders. On top, ACF is supported in all major page builders so you can access any data just as used to in your theme mor pagebuilder. Anyway, BuddyForms coems with some hzandy functionallety to display form any data submitted by a form. read more about Display form submission data in the documentation
 
 ### ACF Profile Forms
