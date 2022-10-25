@@ -1,4 +1,4 @@
-=== Advanced Custon Foields Frontend Forms - ACF Forms - ACF Post Form - ACF Registration Form - ACF Content Forms with full Moderation===
+=== Advanced Custom Fields Frontend Forms - ACF Forms - ACF Post Form - ACF Registration Form - ACF Content Forms ===
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem
 Tags: acf, advanced custom fields, acf form, acf registration, acf post form
 Requires at least: 4.0
@@ -7,68 +7,73 @@ Stable tag: 1.3.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-ACF Forms for any Form Type. Use ACF Forms anywhere. ACF Frontend Forms to create edit and delete any kind of data. ACF Form Submissions with full moderation control. ACF Registration Forms and ACF Profile Forms build with ease!
+ACF Forms for any Form Type. Use ACF Forms anywhere. ACF Frontend Forms to create edit and delete any kind of data. ACF Form Submissions with full moderation control. ACF Registration Form and ACF Profile Forms build with ease!
 
 == Description ==
 
-Integrates the popular Plugin "Advanced Custom Fields" (ACF) with BuddyForms. Use all ACF Fields in your form like native BuddyForms form elements.
-Works with any BuddyPress BuddyBoss, Ultimate Member and 
-With the BuddyForms ACF Extension you can use Advanced Custom Fields with BuddyForms.
-<br>
 
-<h4>ACF Free and Pro</h4>
-This plugins supports the Free and Pro version of ACF out of the box.
+This plugins supports the Free and Pro version of ACF (Advanced Custom Fields) out of the box.
 The plugin will detect if Free or Pro version is installed, and then loads the correct ACF field groups.
 <br>
 
-<h4>ACF for the backend and BuddyForms for the front end.</h4>
+###ACF for the backend and BuddyForms for the front end.
 
-ACF is the preferred choice for creating post metaboxes for the edit screen in the WordPress backend (wp-admin).
+#### ACF is the preferred choice for creating post metaboxes for the edit screen in the WordPress backend (wp-admin). It comes packed with tons of great form elements and features.
 
-It comes packed with tons of great form elements and features.
+Make your admin edit screen accessable for your users without the need to log into your admin. BuddyForms ACF works with all ACF Extensions and BuddyForms Extensions and let you create extream powerfull solutions that are fully accessable from the forntend. 
 
-<b>Use all of the ACF features in the front end and combine the best of both worlds. </b>
 
-BuddyForms ACF works with all ACF Extensions and BuddyForms Extensions.
-<br>
 
-<h4>Use ACF to create a BuddyPress Component </h4>
+## Advanced Custom Fields Form Types
+
+### ACF Contact Form
+### ACF Registration Form
+### ACF Post Form
+### ACF Content form for and type of data 
+### ACF Profile Forms
+
+### ACF BuddyPress
+### ACF BuddyBoss
+### ACF Ultimate Member 
+### ACF Guest Post
+### ACF User Generated Content
+
+
+
+### Moderation Controle
+
+### Advanced Custom Fields Extension
+
+### BuddyPress Extensions
+
+
+
+
+
+### Use ACF to create a BuddyPress Component
 Create a BuddyPress Members Component or extend your groups with ACF fields!
 <br>
 
-<h4>Use ACF for all your form fields</h4>
+### Use ACF for all your form fields
 With ACF enabled you build your form fields once and use everywhere. Use ACF for all form elements needed and just integrate the ACF field groups or single fields in your BuddyForms forms. You can use any ACF Field or Custom ACF Fields with BuddyForms and combine them with BuddyForms Fields and Extensions.
-<br>
 
-<h4>Moderation for your ACF Forms</h4>
+### Moderation for your ACF Forms
 With BuddyForms Moderation you get real post submission moderation to your hands.
 Let your users create and edit posts without creating the ugly 404 "WordPress is struggling" if a published post is set back to draft. ;)
-<br>
 
-<h4>Sync ACF with BuddyPress</h4>
+### Sync ACF with BuddyPress
 Now you are able to Sync your ACF field under BuddyForms with BuddyPress xProfile.
-<br>
 
-<H4>Use everywhere</h4>
+### Use everywhere
 With BuddyForms and ACF together you build your field sets once and use them everywhere.
 In the backend edit screen or in the front end via shortcodes or integrated with BuddyPress or any other BuddyForms supported plugin.
 
-See the list of BuddyForms Extension:
-<a href="https://buddyforms.com/extensions-for-wordpress-forms/">BuddyForms Extensions</a>
 
-See a list of ACF Extensions:
-<a href="https://wordpress.org/plugins/search.php?type=term&q=Advanced+Custom+Fields">https://wordpress.org/plugins/search.php?type=term&q=Advanced+Custom+Fields</a>
-<a href="https://wordpress.org/plugins/search.php?type=term&q=ACF">https://wordpress.org/plugins/search.php?type=term&q=ACF</a>
-
-Combine the power and get the most out of your post forms in the front and backend, seamlessly.
-<br>
-
-<a href="http://buddyforms.com" target="_new">Get BuddyForms Here</a>
 
 
 == Documentation & Support ==
 
-<h4>Extensive Documentation and Support</h4>
+###Extensive Documentation and Support
 
 All code is neat, clean and well documented (inline as well as in the documentation).
 
