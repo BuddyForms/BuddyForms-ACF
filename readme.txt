@@ -2,8 +2,8 @@
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem
 Tags: advanced custom fields, acf form, acf registration, acf post form, acf frontend
 Requires at least: 4.0
-Tested up to: 6.0.3
-Stable tag: 1.3.12
+Tested up to: 6.1
+Stable tag: 1.3.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,6 +102,10 @@ Yes, you can use the Moderation Extension and create Moderation queries in the f
 2. ** ACF Single Field ** - Use Single fields in Groups
 
 == Changelog ==
+= 1.3.13 - 06 Nov 2022 =
+* Updated download link in TGM class.
+* Tested up to WordPress 6.1
+
 = 1.3.12 - 08 Sep 2022 =
 * Fixed issue with multiple ACF fields used in the same form.
 * Tested up to WordPress 6.0.2
