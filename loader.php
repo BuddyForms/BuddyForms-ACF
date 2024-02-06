@@ -165,7 +165,7 @@ class BuddyFormsACF {
 			acf_form_head();
 			global $acf;
 			if ( isset( $acf ) ) {
-				if ( function_exists( 'acf_get_url' ) ) {
+				if ( function_exists( 'acf_get_url' ) && function_exists( 'acf_is_pro' ) && acf_is_pro() ) {
 					$version = acf_get_setting( 'version' );
 					$min     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 					wp_enqueue_script( 'acf-pro-field-group', acf_get_url( "/assets/build/js/acf-field-group{$min}.js" ), array( 'acf-field-group' ), $version );
