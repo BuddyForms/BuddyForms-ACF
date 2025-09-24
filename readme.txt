@@ -3,7 +3,7 @@ Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, camiloluna
 Tags: forms, frontend, custom fields, submission, buddypress, profiles
 Requires at least: 4.0
 Tested up to: 6.8.2
-Stable tag: 1.3.15
+Stable tag: 1.3.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
