@@ -1,107 +1,60 @@
-=== Advanced Custom Fields Frontend Forms - ACF Forms - ACF Post Form - ACF Registration Form - ACF Content Form - ACF Profile Form ===
-Contributors: svenl77, konradS, themekraft, buddyforms, gfirem
-Tags: advanced custom fields, acf form, acf registration, acf post form, acf frontend
+=== BuddyForms – Advanced Custom Fields Integration Add-on ===
+Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, camiloluna
+Tags: forms, frontend, custom fields, submission, buddypress, profiles
 Requires at least: 4.0
-Tested up to: 6.4.1
+Tested up to: 6.8.2
 Stable tag: 1.3.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-ACF Forms for any Form Type. Use ACF Forms anywhere. ACF Frontend Forms to create edit and delete any kind of data. ACF Form Submissions with full moderation control. ACF Registration Form and ACF Profile Forms build with ease!
+Add BuddyForms frontend forms that map to field groups created with the Advanced Custom Fields plugin. Independent integration; ACF is not included.
 
 == Description ==
 
-ACF for the backend and BuddyForms for the frontend. ACF is the preferred choice for creating post metaboxes for the edit screen in the WordPress backend (wp-admin). It comes packed with tons of great form elements and features.
+This add-on lets you render ACF field groups inside BuddyForms so users can create and edit content from the frontend—while keeping ACF-powered meta in sync.
 
-ACF Frontend Submissions. Make your admin edit screen accessable for your users in the frontend without the need to switch to the admin backend. BuddyForms ACF works with all ACF Extensions and BuddyForms Extensions and let you create extream powerfull solutions that are fully accessable from the forntend. 
+**Highlights**
+- Works with ACF Free and PRO (ACF must be installed separately).
+- Map ACF field groups to BuddyForms forms for frontend create/edit.
+- Supports common ACF field types (text, textarea, select, checkbox, date, color, maps, etc.).
+- BuddyForms Moderation support for review/approval workflows.
+- BuddyPress integration: sync selected ACF fields with xProfile.
 
-## Advanced Custom Fields Form Types
-
-### ACF Contact Form
-Use any ACF Field or ACF Group in BuddyForms Contact Forms
-
-### ACF Registration Form
-create powerfull registratio froms from ACF Fields or Field Groups. Create new user during post or data submission of a acf form. Mix registration and post data into one form by using ACF insite a BuddyForms Form. 
-
-### ACF Post Form
-Use any ACF Field or Field Group and use it in a BuddyForms Post Form as form Element. Benefit from all the functionalety BuddyForms bring into post forms to create edit and delete posts from the frontend. BuddyForms is a full Frontend CMS that helps your users create and manage content from the frontend. 
-
-### List Submissions
-List Submissions made with a ACF Form in the frontendn and enable the author to manage there submissions based on there user rights. Every form comes witha permission section to define create - edit and delete capabillities. 
-
-### Display Formdata vs Display ACF Fields
-You can use any ACF field in BuddyForms to display data in themes and pages with gutenberg or pagebuilders. On top, ACF is supported in all major page builders so you can access any data just as used to in your theme mor pagebuilder. Anyway, BuddyForms coems with some hzandy functionallety to display form any data submitted by a form.
-
-### ACF Profile Forms
-Create Author and Profile Pages for your Member with ACf and let your users change there Profile information with a handy profile form to manage all the data from one place. 
-
-### ACF BuddyPress - ACF BuddyBoss
-Use Acf with BuddyPress and BuddyForms Members to create a new Profile tab from a field or field group
-
-### ACF Ultimate Member 
-Use Acf with BuddyPress and BuddyForms Ultimate Members to create a new Profile tab from a acf field or acf field group
-
-### ACF Guest Post
-Create all lthe relevant views for guest posts with ACF and BuddyForms Moderation and create a content creation process that make guest submissions with ACF possible.
-
-### ACF User Generated Content
-Create ACF Forms to collect User Generated Content of any kind with ease. This can be a file upload or any kind of content type. Enable your members to access there data data. 
-
-### ACF Payed Forms 
-Create Payed ACF Submissions and let your users pay to use a ACF Form or edit exiting content with the BuddyForms pay for Submission Extension. 
-
-### Moderation Controle
-With BuddyForms you get a tons of features to make sure your Content ios valide and stay live while somone is editing a post. BuddyForms cover all the needs of a content creatin review process. We are working on new features to validate tehj qualety of your content all the time. Find out more about BuddyForms Moderation and Notification System and in the Documentation
-
-### Advanced Custom Fields Extension
-You can use any ACF extension with BuddyForms. BuddyForms ACF should be fully comatible 
-
-### Use ACF to create a BuddyPress Component
-Create a BuddyPress Members Component or extend your groups with ACF fields!
-
-### Use ACF for all your form fields
-With ACF enabled you build your form fields once and use everywhere. Use ACF for all form elements needed and just integrate the ACF field groups or single fields in your BuddyForms forms. You can use any ACF Field or Custom ACF Fields with BuddyForms and combine them with BuddyForms Fields and Extensions. If you use ACF, no need to use buddyForms form elements. just use BuddyForms for the frontend CMS to build the Forntend Post Forms and Submission lists to manage post submissions from the frontend.
-
-### Sync ACF with BuddyPress
-Now you are able to Sync your ACF field under BuddyForms with BuddyPress xProfile.
-
-== Documentation & Support ==
-
-###Extensive Documentation and Support
-
-All code is neat, clean and well documented (inline as well as in the documentation).
-
-The BuddyForms Documentation comes with many how-to’s! [https://docs.buddyforms.com/](https://docs.buddyforms.com/)
-
-If you still get stuck somewhere, our support gets you back on the right track. You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard!
+> Note: This plugin integrates with Advanced Custom Fields; it does not bundle any ACF code or assets.
 
 == Installation ==
 
-Download and install the plugin using the built-in WordPress plugin installer.
-
-If you download BuddyForms manually, make sure it is uploaded to "/wp-content/plugins/".
-
-Activate the plugin in the "Plugins" admin panel using the "Activate" link. If you're using WordPress Multisite, you can also activate BuddyForms network wide.
+1. Install and activate **BuddyForms**.
+2. Install and activate **Advanced Custom Fields** (Free or PRO).
+3. Upload and activate this add-on.
+4. Go to **BuddyForms → Forms**, create or edit a form, and map your ACF field groups or fields.
 
 == Frequently Asked Questions ==
 
-= Can I Create Advanced Custom Fields Forms =
-Yes, you can create Simple Contact Forms or Complex Contact Forms with any ACF Field Type
+= Does this plugin include ACF? =
+No. ACF needs to be installed and active.
 
-= Can I Create advanced Custom Fields Post Form =
-Yes, you can create post forms for user submissions from the front end for any post type
+= Do I need ACF PRO? =
+No. The free version works; PRO field types are supported where possible.
 
-= Can I use Advanced Custom Fields Frontend Moderation =
-Yes, you can use the Moderation Extension and create Moderation queries in the frontend for your moderators to moderate advanced custom fields frontend forms submissions and comunicate with the submitter if needed during the review process.
-
+= Does this modify my ACF field groups? =
+No. Field groups are read to render frontend fields; they aren't altered.
 
 == Screenshots ==
-
-1. ** ACF Field Group ** -  Use ACF Groups in Forms
-
-2. ** ACF Single Field ** - Use Single fields in Groups
+1. Mapping an ACF field group to a BuddyForms form
+2. Frontend submission form
+3. Submitted entry view
 
 == Changelog ==
+= 1.3.16 - 24 Sep 2025 =
+* Updated plugin display name for compliance.
+* Cleaned up readme file.
+* Added trademark disclaimer and clarified independent integration.
+* Replaced third-party brand assets references with neutral wording.
+* Updated tk_scripts depencency version.
+* Added dependency config to allow plugins.
+* Tested up to WordPress 6.8.2
+
 = 1.3.15 - 19 Nov 2023 =
 * Updated Freemius SDK
 * Tested up to WordPress 6.4.1
