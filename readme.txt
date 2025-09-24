@@ -46,7 +46,7 @@ No. Field groups are read to render frontend fields; they aren't altered.
 3. Submitted entry view
 
 == Changelog ==
-= 1.3.16 - 24 Sep 2025 =
+= 1.3.17 - 24 Sep 2025 =
 * Updated plugin display name for compliance.
 * Cleaned up readme file.
 * Added trademark disclaimer and clarified independent integration.
@@ -54,6 +54,11 @@ No. Field groups are read to render frontend fields; they aren't altered.
 * Updated tk_scripts depencency version.
 * Added dependency config to allow plugins.
 * Tested up to WordPress 6.8.2
+
+= 1.3.16 - 06 Feb 2024 =
+* Fixed issue with JS dependencies of ACF pro fields.
+* Updated Freemius SDK
+* Tested up to WordPress 6.4.3
 
 = 1.3.15 - 19 Nov 2023 =
 * Updated Freemius SDK

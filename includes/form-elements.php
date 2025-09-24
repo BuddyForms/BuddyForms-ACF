@@ -1,5 +1,8 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+
+
 /*
  * Add ACF form elements in the form elements select box
  */
