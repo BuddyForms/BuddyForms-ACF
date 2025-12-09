@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * License: GPLv2 or later
- * Network: false
  * Text Domain: buddyforms
  * Svn: buddyforms-acf
  *****************************************************************************
@@ -155,9 +154,9 @@ class BuddyFormsACF {
 				1
 			);
 			$colorpicker_l10n = array(
-				'clear'         => __( 'Clear' ),
-				'defaultString' => __( 'Default' ),
-				'pick'          => __( 'Select Color' ),
+				'clear'         => __( 'Clear', 'buddyforms' ),
+				'defaultString' => __( 'Default', 'buddyforms' ),
+				'pick'          => __( 'Select Color', 'buddyforms' ),
 			);
 			wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
 			// dequeue wp styling
@@ -286,9 +285,17 @@ function buddyforms_acf_fs_is_parent_active_and_loaded() {
 }
 
 function buddyforms_acf_fs_is_parent_active() {
-	$active_plugins_basenames = get_option( 'active_plugins' );
-	foreach ( $active_plugins_basenames as $plugin_basename ) {
-		if ( 0 === strpos( $plugin_basename, 'buddyforms/' ) || 0 === strpos( $plugin_basename, 'buddyforms-premium/' ) ) {
+	$active_plugins = get_option( 'active_plugins', array() );
+
+	if ( is_multisite() ) {
+		$network_active_plugins = get_site_option( 'active_sitewide_plugins', array() );
+		$active_plugins         = array_merge( $active_plugins, array_keys( $network_active_plugins ) );
+	}
+
+	foreach ( $active_plugins as $basename ) {
+		if ( 0 === strpos( $basename, 'buddyforms/' ) ||
+			 0 === strpos( $basename, 'buddyforms-premium/' )
+		) {
 			return true;
 		}
 	}
@@ -297,24 +304,22 @@ function buddyforms_acf_fs_is_parent_active() {
 }
 
 function buddyforms_acf_fs_init() {
-
 	if ( buddyforms_acf_fs_is_parent_active_and_loaded() ) {
 		// Init Freemius.
 		buddyforms_acf_fs();
+
+		// Signal that the add-on's SDK was initiated.
+		do_action( 'buddyforms_acf_fs_loaded' );
 	}
 }
-
 
 if ( buddyforms_acf_fs_is_parent_active_and_loaded() ) {
 	// If parent already included, init add-on.
 	buddyforms_acf_fs_init();
+} else if ( buddyforms_acf_fs_is_parent_active() ) {
+	// Init add-on only after the parent is loaded.
+	add_action( 'buddyforms_core_fs_loaded', 'buddyforms_acf_fs_init' );
 } else {
-
-	if ( buddyforms_acf_fs_is_parent_active() ) {
-		// Init add-on only after the parent is loaded.
-		add_action( 'buddyforms_core_fs_loaded', 'buddyforms_acf_fs_init' );
-	} else {
-		// Even though the parent is not activated, execute add-on for activation / uninstall hooks.
-		buddyforms_acf_fs_init();
-	}
+	// Even though the parent is not activated, execute add-on for activation / uninstall hooks.
+	buddyforms_acf_fs_init();
 }
