@@ -1,8 +1,8 @@
-=== BuddyForms – Advanced Custom Fields Integration Add-on ===
+=== BuddyForms Advanced Custom Fields
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, camiloluna
-Tags: forms, frontend, custom fields, submission, buddypress, profiles
+Tags: forms, frontend, custom fields, submission, buddypress
 Requires at least: 4.0
-Tested up to: 6.8.2
+Tested up to: 6.9
 Stable tag: 1.3.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
