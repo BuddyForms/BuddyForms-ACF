@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * License: GPLv2 or later
- * Text Domain: buddyforms
+ * Text Domain: buddyforms-acf
  * Svn: buddyforms-acf
  *****************************************************************************
  *
@@ -101,7 +101,7 @@ class BuddyFormsACF {
 	 * @since 0.1
 	 */
 	public function load_plugin_textdomain() {
-		load_plugin_textdomain( 'buddyforms', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'buddyforms-acf', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
@@ -154,9 +154,9 @@ class BuddyFormsACF {
 				1
 			);
 			$colorpicker_l10n = array(
-				'clear'         => __( 'Clear', 'buddyforms' ),
-				'defaultString' => __( 'Default', 'buddyforms' ),
-				'pick'          => __( 'Select Color', 'buddyforms' ),
+				'clear'         => __( 'Clear', 'buddyforms-acf' ),
+				'defaultString' => __( 'Default', 'buddyforms-acf' ),
+				'pick'          => __( 'Select Color', 'buddyforms-acf' ),
 			);
 			wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', $colorpicker_l10n );
 			// dequeue wp styling
