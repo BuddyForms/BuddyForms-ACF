@@ -259,6 +259,7 @@ function buddyforms_acf_fs() {
 				'public_key'                     => 'pk_08c84f0b4787a8364f3bd9aa1119f',
 				'is_premium'                     => false,
 				'has_paid_plans'                 => false,
+				'is_org_compliant'               => true,
 				'parent'                         => array(
 					'id'         => '391',
 					'slug'       => 'buddyforms',
