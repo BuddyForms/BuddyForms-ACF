@@ -3,7 +3,7 @@ Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, camiloluna
 Tags: forms, frontend, custom fields, submission, buddypress
 Requires at least: 4.0
 Tested up to: 6.9
-Stable tag: 1.3.19
+Stable tag: 1.3.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,9 @@ No. Field groups are read to render frontend fields; they aren't altered.
 3. Submitted entry view
 
 == Changelog ==
+= 1.3.20 - 11 Feb 2026 =
+* Add is_org_compliant flag to Freemius config for WordPress.org compliance.
+
 = 1.3.19 - 10 Feb 2026 =
 * Fix text domain mismatch: changed from 'buddyforms' to 'buddyforms-acf' to match plugin slug.
 * Tested up to WordPress 6.9.
