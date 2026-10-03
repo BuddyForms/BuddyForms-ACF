@@ -1,0 +1,17 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+"
+
+jobs:
+  release:
+    uses: Themekraft/release-tooling/.github/workflows/release.yml@main
+    with:
+      slug: buddyforms-acf
+      freemius-id: "410"
+      main-file: loader.php
+      wporg: true
+    secrets: inherit
