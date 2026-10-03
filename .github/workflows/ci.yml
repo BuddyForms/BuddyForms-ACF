@@ -1,0 +1,16 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [develop]
+
+jobs:
+  ci:
+    uses: Themekraft/release-tooling/.github/workflows/ci.yml@main
+    with:
+      slug: buddyforms-acf
+      plugin-check: true
+      # 101 Plugin Check errors left from before the migration; tracked in Jira. Remove when fixed.
+      plugin-check-blocking: false
+    secrets: inherit

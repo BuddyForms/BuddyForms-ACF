@@ -8,6 +8,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
  * Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
  * Version: 1.3.20
+ * Requires at least: 5.9
+ * Requires PHP: 7.4
+ * Requires Plugins: buddyforms, advanced-custom-fields
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * License: GPLv2 or later
@@ -31,6 +34,25 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  ****************************************************************************
  */
+
+if ( ! function_exists( 'buddyforms_addon_plugin_dependencies_slug' ) ) {
+	/**
+	 * Let the running BuddyForms copy (free or premium) satisfy "Requires Plugins: buddyforms".
+	 *
+	 * @param string $slug Dependency slug.
+	 *
+	 * @return string
+	 */
+	function buddyforms_addon_plugin_dependencies_slug( $slug ) {
+		if ( 'buddyforms' === $slug && defined( 'BUDDYFORMS_INSTALL_PATH' ) ) {
+			return basename( BUDDYFORMS_INSTALL_PATH );
+		}
+
+		return $slug;
+	}
+
+	add_filter( 'wp_plugin_dependencies_slug', 'buddyforms_addon_plugin_dependencies_slug' );
+}
 
 class BuddyFormsACF {
 	/**
@@ -143,14 +165,14 @@ class BuddyFormsACF {
 				'iris',
 				admin_url( 'js/iris.min.js' ),
 				array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ),
-				false,
+				get_bloginfo( 'version' ),
 				1
 			);
 			wp_enqueue_script(
 				'wp-color-picker',
 				admin_url( 'js/color-picker.min.js' ),
 				array( 'iris' ),
-				false,
+				get_bloginfo( 'version' ),
 				1
 			);
 			$colorpicker_l10n = array(
@@ -180,62 +202,6 @@ class BuddyFormsACF {
 }
 
 $GLOBALS['BuddyFormsACF'] = new BuddyFormsACF();
-//
-// Check the plugin dependencies
-//
-add_action(
-	'init',
-	function () {
-		// Only Check for requirements in the admin
-		if ( ! is_admin() ) {
-			return;
-		}
-		// Require TGM
-		require dirname( __FILE__ ) . '/includes/resources/tgm/class-tgm-plugin-activation.php';
-		// Hook required plugins function to the tgmpa_register action
-		add_action(
-			'tgmpa_register',
-			function () {
-				$bf_acf_depand = false;
-
-				if ( ! class_exists( 'acf' ) ) {
-					$bf_acf_depand = true;
-					// Create the required plugins array
-					$plugins['advanced-custom-fields'] = array(
-						'name'     => 'Advanced Custom Fields',
-						'slug'     => 'advanced-custom-fields',
-						'required' => true,
-					);
-				}
-
-				if ( ! defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
-					$bf_acf_depand         = true;
-					$plugins['buddyforms'] = array(
-						'name'     => 'BuddyForms',
-						'slug'     => 'buddyforms',
-						'required' => true,
-					);
-				}
-
-				if ( $bf_acf_depand ) {
-					$config = array(
-						'id'           => 'buddyforms-tgmpa',
-						'parent_slug'  => 'plugins.php',
-						'capability'   => 'manage_options',
-						'has_notices'  => true,
-						'dismissable'  => false,
-						'is_automatic' => true,
-					);
-					// Call the tgmpa function to register the required plugins
-					tgmpa( $plugins, $config );
-				}
-
-			}
-		);
-	},
-	1,
-	1
-);
 
 // Create a helper function for easy SDK access.
 function buddyforms_acf_fs() {

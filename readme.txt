@@ -1,8 +1,9 @@
 === BuddyForms Advanced Custom Fields
 Contributors: svenl77, konradS, themekraft, buddyforms, gfirem, camiloluna
 Tags: forms, frontend, custom fields, submission, buddypress
-Requires at least: 4.0
-Tested up to: 6.9
+Requires at least: 5.9
+Tested up to: 7.1
+Requires PHP: 7.4
 Stable tag: 1.3.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
