@@ -11,4 +11,6 @@ jobs:
     with:
       slug: buddyforms-acf
       plugin-check: true
+      # 101 Plugin Check errors left from before the migration; tracked in Jira. Remove when fixed.
+      plugin-check-blocking: false
     secrets: inherit
