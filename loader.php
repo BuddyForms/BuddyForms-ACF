@@ -8,6 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin URI: http://buddyforms.com/downloads/buddyforms-advanced-custom-fields/
  * Description: Integrates the populare ACF Plugin with BuddyForms. Use all ACF Fields in your form like native BuddyForms Form Elements
  * Version: 1.3.20
+ * Requires at least: 5.9
+ * Requires PHP: 7.4
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * License: GPLv2 or later
