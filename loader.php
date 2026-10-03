@@ -145,14 +145,14 @@ class BuddyFormsACF {
 				'iris',
 				admin_url( 'js/iris.min.js' ),
 				array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ),
-				false,
+				get_bloginfo( 'version' ),
 				1
 			);
 			wp_enqueue_script(
 				'wp-color-picker',
 				admin_url( 'js/color-picker.min.js' ),
 				array( 'iris' ),
-				false,
+				get_bloginfo( 'version' ),
 				1
 			);
 			$colorpicker_l10n = array(
